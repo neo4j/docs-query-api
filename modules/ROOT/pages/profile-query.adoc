@@ -1,0 +1,163 @@
+= Profile queries
+
+If a query is prepended with `EXPLAIN`, the server will return the _execution plan_ it would use to run it, but not actually execute it.
+On the other hand, if a query is prepended with `PROFILE`, the server will return the execution plan _and_ the corresponding query result.
+
+The execution plan is valuable in analyzing a query and profiling its performance.
+For more information, see link:{neo4j-docs-base-uri}/cypher-manual/current/planning-and-tuning/[Execution plans and query tuning].
+
+====
+[discrete]
+=== Example request
+
+[source, headers]
+----
+POST http://localhost:7474/db/v2/query/neo4j
+Accept: application/json;charset=UTF-8
+Content-Type: application/json
+Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
+----
+
+[source, JSON]
+----
+{
+  "statement": "PROFILE MATCH (n:Person {name: $name}) RETURN n.name",
+  "parameters": {
+    "name": "Alice"
+  }
+}
+----
+
+[discrete]
+=== Example response
+
+[source, headers]
+----
+200: OK
+Content-Type: application/json;charset=utf-8
+----
+
+[source, JSON]
+----
+{
+  "data": {
+    "fields": [
+      "n.name"
+    ],
+    "values": [
+      "Alice"
+    ]
+  },
+  "profiledQueryPlan": {
+    "dbHits": 0,
+    "records": 1,
+    "hasPageCacheStats": false,
+    "pageCacheHits": 0,
+    "pageCacheMisses": 0,
+    "pageCacheHitRatio": 0.0,
+    "time": 0,
+    "operatorType": "ProduceResults@neo4j",
+    "arguments": {
+      "GlobalMemory": 312,
+      "planner-impl": "IDP",
+      "Memory": 0,
+      "string-representation": "Planner COST\n\nRuntime PIPELINED\n\nRuntime version 5.18\n\nBatch size 128\n\n+------------------+----+---------------------------+----------------+------+---------+----------------+------------------------+-----------+---------------------+\n| Operator         | Id | Details                   | Estimated Rows | Rows | DB Hits | Memory (Bytes) | Page Cache Hits/Misses | Time (ms) | Pipeline            |\n+------------------+----+---------------------------+----------------+------+---------+----------------+------------------------+-----------+---------------------+\n| +ProduceResults  |  0 | `n.name`                  |              1 |    1 |       0 |              0 |                        |           |                     |\n| |                +----+---------------------------+----------------+------+---------+----------------+                        |           |                     |\n| +Projection      |  1 | cache[n.name] AS `n.name` |              1 |    1 |       0 |                |                        |           |                     |\n| |                +----+---------------------------+----------------+------+---------+----------------+                        |           |                     |\n| +Filter          |  2 | cache[n.name] = $name     |              1 |    1 |       8 |                |                        |           |                     |\n| |                +----+---------------------------+----------------+------+---------+----------------+                        |           |                     |\n| +NodeByLabelScan |  3 | n:Person                  |             10 |    4 |       5 |            248 |                    3/0 |     0.453 | Fused in Pipeline 0 |\n+------------------+----+---------------------------+----------------+------+---------+----------------+------------------------+-----------+---------------------+\n\nTotal database accesses: 13, total allocated memory: 312\n",
+      "runtime": "PIPELINED",
+      "runtime-impl": "PIPELINED",
+      "DbHits": 0,
+      "batch-size": 128,
+      "Details": "`n.name`",
+      "planner-version": "5.18",
+      "PipelineInfo": "Fused in Pipeline 0",
+      "runtime-version": "5.18",
+      "Id": 0,
+      "EstimatedRows": 0.5,
+      "planner": "COST",
+      "Rows": 1
+    },
+    "identifiers": [
+        "n",
+        "`n.name`"
+    ],
+    "children": [
+      {
+        "dbHits": 0,
+        "records": 1,
+        "hasPageCacheStats": false,
+        "pageCacheHits": 0,
+        "pageCacheMisses": 0,
+        "pageCacheHitRatio": 0.0,
+        "time": 0,
+        "operatorType": "Projection@neo4j",
+        "arguments": {
+          "Details": "cache[n.name] AS `n.name`",
+          "PipelineInfo": "Fused in Pipeline 0",
+          "Id": 1,
+          "EstimatedRows": 0.5,
+          "DbHits": 0,
+          "Rows": 1
+        },
+        "identifiers": [
+          "n",
+          "`n.name`"
+        ],
+        "children": [
+          {
+            "dbHits": 8,
+            "records": 1,
+            "hasPageCacheStats": false,
+            "pageCacheHits": 0,
+            "pageCacheMisses": 0,
+            "pageCacheHitRatio": 0.0,
+            "time": 0,
+            "operatorType": "Filter@neo4j",
+            "arguments": {
+              "Details": "cache[n.name] = $name",
+              "PipelineInfo": "Fused in Pipeline 0",
+              "Id": 2,
+              "EstimatedRows": 0.5,
+              "DbHits": 8,
+              "Rows": 1
+            },
+            "identifiers": [
+              "n"
+            ],
+            "children": [
+              {
+                "dbHits": 5,
+                "records": 4,
+                "hasPageCacheStats": true,
+                "pageCacheHits": 3,
+                "pageCacheMisses": 0,
+                "pageCacheHitRatio": 1.0,
+                "time": 453072,
+                "operatorType": "NodeByLabelScan@neo4j",
+                "arguments": {
+                  "Details": "n:Person",
+                  "PipelineInfo": "Fused in Pipeline 0",
+                  "Memory": 248,
+                  "Time": 453072,
+                  "Id": 3,
+                  "EstimatedRows": 10.0,
+                  "PageCacheMisses": 0,
+                  "DbHits": 5,
+                  "Rows": 4,
+                  "PageCacheHits": 3
+                },
+                "identifiers": [
+                  "n"
+                ],
+                "children": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "bookmarks": [
+    "FB:kcwQ/wTfJf8rS1WY+GiIKXsCXgyQ"
+  ]
+}
+----
+====

@@ -1,0 +1,37 @@
+= Headers
+
+This page contains a full list of headers you may use to tweak the API behavior, or that the API may return in responses.
+
+== Request headers
+
+[cols="1m, 3"]
+|===
+|Header |Description
+
+|Accept
+|Desired format of the response body. +
+Possible values are `application/json` (default), `application/vnd.neo4j.jolt-v2`, or `application/vnd.neo4j.jolt-v2+json-seq`. +
+For more information, see xref:result-formats.adoc[].
+
+|Authorization
+|Authentication credentials to authorize the request. +
+For more information, see xref:authentication-authorization.adoc[].
+
+|Content-Type
+|The format of the request body. +
+The only possible value is `application/json`.
+
+|===
+
+== Response headers
+
+[cols="1m, 3"]
+|===
+|Header |Description
+
+|Content-Type
+|The format of the response body (matches the `Accept` request header). +
+Possible values are `application/json`, `application/vnd.neo4j.jolt-v2`, or `application/vnd.neo4j.jolt-v2+json-seq`. +
+For more information, see xref:result-formats.adoc[].
+
+|===

@@ -1,0 +1,71 @@
+= Route queries to read cluster members
+
+In a cluster environment, all queries are routed to writer members by default.
+To ensure efficient load balancing, you should send queries that contain only read statements to the cluster readers.
+You can do so by adding `accessMode: Read` to the request body (the default is `Write`).
+
+====
+[discrete]
+=== Example request
+
+[source, headers]
+----
+POST http://localhost:7474/db/v2/query/neo4j
+Accept: application/json;charset=UTF-8
+Content-Type: application/json
+Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
+----
+
+[source, JSON]
+----
+{
+  "statement": "MATCH (n:Person) RETURN n LIMIT 2",
+  "accessMode": "Read"  // mark-line
+}
+----
+
+[discrete]
+=== Example response
+
+[source, headers]
+----
+202: Accepted
+Content-Type: application/json;charset=utf-8
+----
+
+[source, JSON]
+----
+{
+  "data": {
+    "fields": [
+      "n"
+    ],
+    "values": [
+      {
+        "elementId": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:0",
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "name": "Alice",
+          "age": 42
+        }
+      },
+      {
+        "elementId": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:1",
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "name": "Lucy"
+        }
+      }
+    ]
+  },
+  "bookmarks": [
+    "FB:kcwQ/wTfJf8rS1WY+GiIKXsCXguQ"
+  ]
+}
+----
+====
+

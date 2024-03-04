@@ -1,0 +1,32 @@
+:description: The Query API allows to execute Cypher statements against a Neo4j server through HTTP requests.
+
+= Introduction
+
+[WARNING]
+====
+The Query API is currently not available on on-prem?
+====
+
+The Query API allows to execute Cypher statements against a Neo4j server through HTTP requests.
+
+The main use case of the API is for developing client applications in languages for which there is no supported library.
+If there exists an official library (driver) for the language you are using, consider using that instead -- see link:{neo4j-docs-base-uri}/create-applications/[Create applications].
+
+This guide assumes that you have:
+
+- A running Neo4j instance -- if not, check out how to link:{neo4j-docs-base-uri}/operations-manual/current/installation/[install Neo4j].
+- Some familiarity with <<Cypher>> -- if you need a hand, check out link:{neo4j-docs-base-uri}/getting-started/cypher-intro/[Getting started -> Cypher].
+
+The Query API supports HTTP/2 as well as HTTP/1.1, unless either is explicitly disabled in the server configuration setting link:https://neo4j.com/docs/operations-manual/current/configuration/configuration-settings/#config_server.http_enabled_transports[`server.http_enabled_transports`].
+It's up to the client to initiate a connection with the preferred protocol.
+
+[TIP]
+By default, the Query API uses port 7474 for HTTP and port 7473 for HTTPS.
+
+
+ifndef::backend-pdf[]
+[discrete.glossary]
+== Glossary
+
+include::{partials}/glossary.adoc[]
+endif::[]

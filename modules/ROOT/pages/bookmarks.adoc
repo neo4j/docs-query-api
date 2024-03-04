@@ -1,0 +1,110 @@
+= Coordinate transactions and enforce causal consistency
+
+When working with a cluster, _bookmarks_ allow you to chain transactions and enforce <<causal_consistency>>.
+A bookmark is a token that represents some state of the database.
+By passing one or multiple bookmarks along with a query, the server will make sure that the query does not get executed before the represented state(s) have been established.
+
+All responses include a `bookmarks` field containing a list of encoded bookmarks, which represent the state of the transaction's committed changes.
+
+====
+[discrete]
+=== Example request
+
+[source, headers]
+----
+POST http://localhost:7474/db/v2/query/neo4j
+Accept: application/json;charset=UTF-8
+Content-Type: application/json
+Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
+----
+
+[source, JSON]
+----
+{
+  "statement": "MERGE (n:Person {name: $name, age: $age}) RETURN n",
+  "parameters": {
+    "name": "Alice",
+    "age": 42
+  }
+}
+----
+
+[discrete]
+=== Example response
+
+[source, headers]
+----
+202: Accepted
+Content-Type: application/json;charset=utf-8
+----
+
+[source, JSON, role=nocollapse]
+----
+{
+  "data": {
+    "fields": [
+      "n"
+    ],
+    "values": [
+      {
+        "elementId": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:0",
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "name": "Alice",
+          "age": 42
+        }
+      }
+    ]
+  },
+  "bookmarks": [  // mark-line
+    "FB:kcwQ/wTfJf8rS1WY+GiIKXsCXgmQ"  // mark-line
+  ]  // mark-line
+}
+----
+
+====
+
+You can provide a list of bookmarks to a subsequent transaction via the `bookmarks` key in the request body.
+The server waits until it has caught up with the changes encapsulated in the bookmarks before executing the submitted transaction.
+
+In the example below, the server does not execute the transaction until it has registered the changes associated with the bookmarks `FB:kcwQt8DpQx5zR0uN3Oj/OudM3QaQ` and `FB:kcwQy9mp3ioyRom386bZDRRcuCiQ`.
+
+====
+[discrete]
+=== Example request
+
+[source, headers]
+----
+POST http://localhost:7474/db/v2/query/neo4j
+Accept: application/json;charset=UTF-8
+Content-Type: application/json
+Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
+----
+
+[source, JSON]
+----
+{
+  "statement": "MATCH (p1:Person {name: $source}) MATCH (p2:Person {name: $end}) MERGE p=(p1)-[:LIKES]->(p2) RETURN p",
+  "parameters": {
+    "source": "Alice",
+    "end": "Lucy"
+  },
+  "bookmarks": ["FB:kcwQt8DpQx5zR0uN3Oj/OudM3QaQ", "FB:kcwQy9mp3ioyRom386bZDRRcuCiQ"]  // mark-line
+}
+----
+====
+
+[NOTE]
+====
+Bookmarks returned by the server are not intended to be parsed or modified by the client and should be inserted as is into the `bookmarks` field.
+====
+
+
+ifndef::backend-pdf[]
+[discrete.glossary]
+== Glossary
+
+include::{partials}/glossary.adoc[]
+endif::[]

@@ -1,0 +1,146 @@
+:description: Query API result format.
+
+
+= Result formats
+
+The Query API can return queried data in two formats: plain JSON, or a Neo4j-extended JSON with type information.
+
+
+== Plain JSON
+
+The JSON format is the default one.
+It returns plain JSON, with the query results embedded within the `data` object.
+To request this format, set `Accept: application/json` in the request headers (or avoid specifying anything at all, as it is the default if no `Accept` header is provided).
+
+.JSON output format prototype
+[source, JSON]
+----
+{
+  "data": {
+    "fields": [ field1, field2, ... ],  // <1>
+    "values": [ entity1, entity2, ... ]  // <2>
+  }
+}
+----
+
+<1> Query fields, i.e. keys for the returned objects
+<2> Query result (the inner structure of each element depends on the object type)
+
+.Return a node and a property
+====
+[discrete]
+=== Example request
+
+[source, headers]
+----
+POST http://localhost:7474/db/v2/query/neo4j
+Accept: application/json;charset=UTF-8
+Content-Type: application/json
+Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
+----
+
+[source, JSON]
+----
+{
+  "statement": "MERGE (p:Person {name: $name}) RETURN p AS person, p.name AS name",
+  "parameters": {
+    "name": "Phil"
+  }
+}
+----
+
+[discrete]
+=== Example response
+
+[source, JSON]
+----
+{
+  "data": {
+    "fields": [
+      "person",
+      "name"
+    ],
+    "values": [
+      {
+        "elementId": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:2",
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "name": "Phil"
+        }
+      },
+      "Phil"
+    ]
+  },
+  "bookmarks": [
+    "FB:kcwQ/wTfJf8rS1WY+GiIKXsCXg6Q"
+  ]
+}
+----
+
+====
+
+=== Type mapping
+
+Neo4j types are mapped to the closest JSON type, while Neo4j's complex types (temporal, spatial, binary) are serialized to string.
+
+TABLE
+
+
+== JSON with type information
+
+Plain JSON does not provide information about the type of a returned value.
+For example, the two following requests result in the exact same response, even if in the first case the return value is a Cypher `STRING`, while in the second case it is a `ZONED DATETIME`.
+
+[source, JSON]
+----
+{
+  "statement": "RETURN \"2024-01-01T21:40:32-01:00\""
+}
+----
+
+[source, JSON]
+----
+{
+  "statement": "RETURN datetime(\"2024-01-01T21:40:32-01:00\")"
+}
+----
+
+If you care about value types, you can use the Neo4j's extended JSON with type information.
+To receive the result in this format, set the `Accept` header as follows:
+
+----
+Accept: application/vnd.neo4j.query
+----
+
+In this format, each return value becomes an object where the type and value information are stored as separate keys:
+
+.An `OffsetDateTime` value with the JSON with type information
+[source, json]
+----
+{
+  "$type":"OffsetDateTime",
+  "_value":"2015-01-01T21:40:32-01:00"
+}
+----
+
+
+=== Type mapping
+
+This section details how link:{neo4j-docs-base-uri}/cypher-manual/current/values-and-types/[Cypher types] are labeled in Jolt.
+
+
+[options="header", cols=".^a,.^a,d"]
+|===
+| Type Label
+| Type
+| Example
+
+| (N/A)
+| null
+| `null`
+
+|===
+
+

@@ -1,0 +1,136 @@
+= Query the database
+
+To run a query on a database, submit a `POST` request to the following endpoint:
+
+----
+http://<host>:<port>/db/v2/query/<databaseName>
+----
+
+- `<host>` is where the Neo4j instance is located (example `localhost`, `xxx.databases.neo4j.io`),
+- `<port>` is the port on which the Neo4j HTTP server is set to listen on (optional; default `7474`),
+- `<databaseName>` is the database you want to query (example `neo4j`).
+
+The server wraps the submitted Cypher query in a (implicit) <<transaction>> for you.
+This means that in case any part of the query fails, the database will be reverted back to its status before any part of the query was executed.
+
+It's not possible to control the lifecycle of transactions through the Query API, as it is possible with the link:https://neo4j.com/docs/http-api/current[HTTP API] and with link:https://neo4j.com/docs/create-applications/[language libraries].
+
+[TIP]
+Each request must include an `Authorization` header, see xref:authentication-authorization.adoc[] for more information.
+
+====
+[discrete]
+=== Example request
+
+[source, headers]
+----
+POST http://localhost:7474/db/v2/query/neo4j
+Accept: application/json;charset=UTF-8
+Content-Type: application/json
+Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
+----
+
+[source, JSON]
+----
+{
+  "statement": "MERGE (n:Person {name: $name, age: $age}) RETURN n",
+  "parameters": {
+    "name": "Alice",
+    "age": 42
+  }
+}
+----
+
+[discrete]
+=== Example response
+
+[source, headers]
+----
+202: Accepted  // <1>
+Content-Type: application/json;charset=utf-8
+----
+
+[source, JSON, role=nocollapse]
+----
+{
+  "data": {
+    "fields": [  // <2>
+      "n"
+    ],
+    "values": [  // <3>
+      {
+        "elementId": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:0",  // <4>
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "name": "Alice",
+          "age": 42
+        }
+      }
+    ]
+  },
+  "bookmarks": [  // <5>
+    "FB:kcwQ/wTfJf8rS1WY+GiIKXsCXgmQ"
+  ]
+}
+----
+
+<1> f
+<2> f
+<3> f
+<4> f
+<5> f
+
+====
+
+[NOTE]
+`elementId` should be used with care, as no guarantees are given about the mapping between ID values and elements outside the scope of a single transaction.
+In other words, using an `elementId` to `MATCH` an element across different transactions is risky.
+
+[TIP]
+====
+**Literal line breaks are not allowed inside Cypher statements** submitted through the API (as per JSON specifications).
+This means that queries should fit on a single line.
+You can replace line breaks with spaces, as Cypher parses them equivalently.
+====
+
+
+== Query parameters
+
+Avoid hardcoding parameters directly into queries. Instead, always use placeholders and specify the Cypher parameters within a `parameters` object in the body of the request.
+
+The benefits of using query parameters are twofold:
+
+- *Performance*: Neo4j compiles and caches query plans, but can only do so if the query structure is unchanged.
+- *Security*: if using user input in queries, parameters protect against link:https://neo4j.com/developer/kb/protecting-against-cypher-injection/[Cypher injections].
+
+.Good practice -- Use query parameters
+[source, JSON]
+----
+{
+  "statement": "MERGE (n:Person {name: $name, age: $age}) RETURN n",
+  "parameters": {
+    "name": "Alice",
+    "age": 42
+  }
+}
+----
+
+.Bad practice -- Embed literals in query
+[source, JSON]
+----
+{
+  "statement": "MERGE (n:Person {name: 'Alice', age: 42}) RETURN n",
+}
+----
+
+See link:{neo4j-docs-base-uri}/cypher-manual/current/syntax/parameters/[Cypher Manual -> Parameters] for more information.
+
+
+ifndef::backend-pdf[]
+[discrete.glossary]
+== Glossary
+
+include::{partials}/glossary.adoc[]
+endif::[]
