@@ -32,7 +32,7 @@ Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
 [source, JSON]
 ----
 {
-  "statement": "MERGE (n:Person {name: $name, age: $age}) RETURN n",
+  "statement": "MERGE (n:Person {name: $name, age: $age}) RETURN n AS alice",
   "parameters": {
     "name": "Alice",
     "age": 42
@@ -54,7 +54,7 @@ Content-Type: application/json
 {
   "data": {
     "fields": [  // <2>
-      "n"
+      "alice"
     ],
     "values": [  // <3>
       {
@@ -75,12 +75,16 @@ Content-Type: application/json
 }
 ----
 
-<1> f
-<2> f
-<3> f
-<4> `elementId` should be used with care, as no guarantees are given about the mapping between ID values and elements outside the scope of a single transaction.
-In other words, using an `elementId` to `MATCH` an element across different transactions is risky.
-<5> f
+<1> Because the server does not know whether the request will be successful or not when it sends the HTTP status code, all API requests return a `202` status code, regardless of whether the statements were successfully executed.
+The only exception is authentication errors, which result in a 301 status code.
+<2> Query result keys.
+<3> Query result values, in the same order as `fields`. +
+For more information on what format the values may take, see xref:result-formats.adoc[].
+<4> Entity ID within the database.
+`elementId` should be used with care, as no guarantees are given about the mapping between ID values and elements outside the scope of a single transaction.
+For example, using an `elementId` to `MATCH` an element across different transactions is risky.
+<5> Bookmarks are used to enforce an ordering to transactions. +
+For more information, see xref:bookmarks.adoc[].
 
 ====
 
@@ -121,7 +125,7 @@ The benefits of using query parameters are twofold:
 }
 ----
 
-For more information, see link:{neo4j-docs-base-uri}/cypher-manual/current/syntax/parameters/[Cypher Manual -> Parameters].
+For general information on parameters, see link:{neo4j-docs-base-uri}/cypher-manual/current/syntax/parameters/[Cypher Manual -> Parameters].
 
 
 ifndef::backend-pdf[]
