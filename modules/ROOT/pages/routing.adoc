@@ -11,8 +11,6 @@ You can do so by adding `accessMode: Read` to the request body (the default is `
 [source, headers]
 ----
 POST http://localhost:7474/db/v2/query/neo4j
-Accept: application/json;charset=UTF-8
-Content-Type: application/json
 Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
 ----
 
@@ -30,7 +28,7 @@ Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
 [source, headers]
 ----
 202: Accepted
-Content-Type: application/json;charset=utf-8
+Content-Type: application/json
 ----
 
 [source, JSON]

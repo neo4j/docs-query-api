@@ -13,8 +13,6 @@ All responses include a `bookmarks` field containing a list of encoded bookmarks
 [source, headers]
 ----
 POST http://localhost:7474/db/v2/query/neo4j
-Accept: application/json;charset=UTF-8
-Content-Type: application/json
 Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
 ----
 
@@ -35,7 +33,7 @@ Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
 [source, headers]
 ----
 202: Accepted
-Content-Type: application/json;charset=utf-8
+Content-Type: application/json
 ----
 
 [source, JSON, role=nocollapse]
@@ -78,8 +76,6 @@ In the example below, the server does not execute the transaction until it has r
 [source, headers]
 ----
 POST http://localhost:7474/db/v2/query/neo4j
-Accept: application/json;charset=UTF-8
-Content-Type: application/json
 Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
 ----
 

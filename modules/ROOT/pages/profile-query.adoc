@@ -13,8 +13,6 @@ For more information, see link:{neo4j-docs-base-uri}/cypher-manual/current/plann
 [source, headers]
 ----
 POST http://localhost:7474/db/v2/query/neo4j
-Accept: application/json;charset=UTF-8
-Content-Type: application/json
 Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
 ----
 
@@ -33,8 +31,8 @@ Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
 
 [source, headers]
 ----
-200: OK
-Content-Type: application/json;charset=utf-8
+202: OK
+Content-Type: application/json
 ----
 
 [source, JSON]

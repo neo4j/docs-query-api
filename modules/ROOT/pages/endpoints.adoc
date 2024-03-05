@@ -2,7 +2,7 @@
 
 = Endpoints
 
-This page contains a list of the endpoints that the HTTP API provides, plus pointers to other HTTP endpoints available on a Neo4j server.
+This page contains a list of the endpoints that the Query API provides, plus pointers to other HTTP endpoints available on a Neo4j server.
 
 [cols="2m, 3"]
 |===
@@ -29,7 +29,6 @@ To obtain a list of available endpoints on your installation, together with some
 [source, headers]
 ----
 GET http://localhost:7474/
-Accept: application/json
 ----
 
 [discrete]

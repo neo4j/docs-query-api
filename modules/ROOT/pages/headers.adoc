@@ -10,7 +10,7 @@ This page contains a full list of headers you may use to tweak the API behavior,
 
 |Accept
 |Desired format of the response body. +
-Possible values are `application/json` (default), `application/vnd.neo4j.jolt-v2`, or `application/vnd.neo4j.jolt-v2+json-seq`. +
+Possible values are `application/json` (default) and `application/vnd.neo4j.query`. +
 For more information, see xref:result-formats.adoc[].
 
 |Authorization
@@ -19,7 +19,8 @@ For more information, see xref:authentication-authorization.adoc[].
 
 |Content-Type
 |The format of the request body. +
-The only possible value is `application/json`.
+Possible values are `application/json` (default) and `application/vnd.neo4j.query`. +
+For more information, see xref:result-formats.adoc[].
 
 |===
 
@@ -31,7 +32,7 @@ The only possible value is `application/json`.
 
 |Content-Type
 |The format of the response body (matches the `Accept` request header). +
-Possible values are `application/json`, `application/vnd.neo4j.jolt-v2`, or `application/vnd.neo4j.jolt-v2+json-seq`. +
+Possible values are `application/json` and `application/vnd.neo4j.query`. +
 For more information, see xref:result-formats.adoc[].
 
 |===

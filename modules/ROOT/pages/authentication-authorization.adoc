@@ -53,8 +53,6 @@ If an `Authorization` header is not supplied (and authentication is not disabled
 [source, headers]
 ----
 POST http://localhost:7474/db/v2/query/neo4j
-Accept: application/json;charset=UTF-8
-Content-Type: application/json
 ----
 
 [discrete]
@@ -63,7 +61,7 @@ Content-Type: application/json
 [source, headers]
 ----
 401: Unauthorized
-Content-Type: application/json;charset=utf-8
+Content-Type: application/json
 ----
 
 [source, JSON]
@@ -89,9 +87,7 @@ If an incorrect username or password is provided, the server replies with status
 [source, headers]
 ----
 POST http://localhost:7474/db/v2/query/neo4j
-Accept: application/json;charset=UTF-8
 Authorization: Basic bmVvNGo6aW5jb3JyZWN0
-Content-Type: application/json
 ----
 
 [discrete]
@@ -100,7 +96,7 @@ Content-Type: application/json
 [source, headers]
 ----
 401: Unauthorized
-Content-Type: application/json;charset=utf-8
+Content-Type: application/json
 ----
 
 [source, JSON]
@@ -126,9 +122,7 @@ If the content of the `Authorization` header is not properly base64-encoded, the
 [source, headers]
 ----
 POST http://localhost:7474/db/v2/query/neo4j
-Accept: application/json;charset=UTF-8
 Authorization: Basic not-proper-base64
-Content-Type: application/json
 ----
 
 [discrete]
@@ -137,7 +131,7 @@ Content-Type: application/json
 [source, headers]
 ----
 401: Unauthorized
-Content-Type: application/json;charset=utf-8
+Content-Type: application/json
 ----
 
 [source, JSON]
