@@ -89,7 +89,163 @@ Content-Type: application/json
 
 link:{neo4j-docs-base-uri}/cypher-manual/current/values-and-types/[Cypher types] are mapped to the closest JSON type, with the complex ones (temporal, spatial, binary) serialized to string.
 
-TABLE
+[options="header", cols=".^1m,.^1m,3a"]
+|===
+| Cypher type
+| Query API type
+| Example
+
+| NULL
+| null
+| [source, JSON]
+----
+null
+----
+
+| BOOLEAN
+| boolean
+| [source, JSON]
+----
+true
+----
+
+| INTEGER
+| number
+| [source, JSON]
+----
+123
+----
+
+| FLOAT
+| number
+| [source, JSON]
+----
+4.56
+----
+
+| STRING
+| string
+| [source, JSON]
+----
+"Hello World"
+----
+
+| ByteArray
+| string
+| [source, JSON]
+----
+"A2+/"
+----
+
+| LIST
+| array
+| [source, JSON]
+----
+[123, 456]
+----
+
+| MAP
+| object
+| [source, JSON]
+----
+{
+  "fieldA": "A value",
+  "fieldB": "Another value"
+}
+----
+
+| Temporal +
+(DATE, ZONED TIME, LOCAL TIME, ZONED DATETIME, LOCAL DATETIME, DURATION)
+| string
+| [source, JSON]
+----
+"2015-03-26"
+"12:50:35.556+01:00"
+"12:50:35.556"
+"2015-11-21T21:40:32.142Z[Antarctica/Troll]"
+"2015-07-04T19:32:24"
+"P14DT16H12M"
+----
+
+| POINT
+| string
+| [source, JSON]
+----
+"SRID=7203;POINT(1.2 3.4)"
+----
+
+| NODE
+| object
+| [source, JSON]
+----
+{
+  "elementId": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:0",
+  "labels": [
+    "Person"
+  ],
+  "properties": {
+    "name": "Alice",
+    "age": 42
+  }
+}
+----
+
+| RELATIONSHIP
+| object
+| [source, JSON]
+----
+{
+  "elementId": "5:ff04df25-ff2b-4b55-98f8-6888297b025e:2",
+  "startNodeElementId": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:0",
+  "endNodeElementId": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:2",
+  "type": "LIKES",
+  "properties": {
+    "since": "forever!"
+  }
+}
+----
+
+| PATH
+| object
+| [source, JSON]
+----
+[
+  {
+    "elementId": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:0",
+    "labels": [
+      "Person"
+    ],
+    "properties": {
+      "name": "Alice",
+      "age": 42
+    }
+  },
+  {
+    "elementId": "5:ff04df25-ff2b-4b55-98f8-6888297b025e:2",
+    "startNodeElementId": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:0",
+    "endNodeElementId": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:2",
+    "type": "LIKES",
+    "properties": {
+      "since": "forever!"
+    }
+  },
+  {
+    "elementId": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:2",
+    "labels": [
+      "Person"
+    ],
+    "properties": {
+      "name": "Phil"
+    }
+  }
+]
+----
+
+[NOTE]
+The direction of the relationship in a path is only encoded in the start and end node element IDs.
+The order of returned nodes and relationships is not representative of the direction of relationships.
+
+|===
 
 
 == JSON with type information
@@ -124,7 +280,7 @@ In this format, each return value is an object where the type and value informat
 ----
 {
   "$type":"OffsetDateTime",
-  "_value":"2015-01-01T21:40:32-01:00"
+  "_value":"2024-01-01T21:40:32-01:00"
 }
 ----
 
@@ -206,7 +362,7 @@ Content-Type: application/json
 
 === Type mapping
 
-This section details how link:{neo4j-docs-base-uri}/cypher-manual/current/values-and-types/[Cypher types] are labeled in Jolt.
+This section details how link:{neo4j-docs-base-uri}/cypher-manual/current/values-and-types/[Cypher types] are labeled in the Query API.
 
 
 [options="header", cols=".^1m,.^1m,3a"]
@@ -219,119 +375,158 @@ This section details how link:{neo4j-docs-base-uri}/cypher-manual/current/values
 | null
 | [source, JSON]
 ----
-{ "$type": "Null",
-  "_value": null }
+{
+  "$type": "Null",
+  "_value": null
+}
 ----
 
 | BOOLEAN
 | Boolean
 | [source, JSON]
 ----
-{ "$type": "Boolean",
-  "_value": true }
+{
+  "$type": "Boolean",
+  "_value": true
+}
 ----
 
 | INTEGER
 | Integer
 | [source, JSON]
 ----
-{ "$type": "Integer",
-  "_value": "123" }
+{
+  "$type": "Integer",
+  "_value": "123"
+}
 ----
 
 | FLOAT
 | Float
 | [source, JSON]
 ----
-{ "$type": "Float",
-  "_value": "4.56" }
+{
+  "$type": "Float",
+  "_value": "4.56"
+}
 ----
 
 | STRING
 | String
 | [source, JSON]
 ----
-{ "$type": "String",
-  "_value": "Hello World" }
+{
+  "$type": "String",
+  "_value": "Hello World"
+}
 ----
 
 | ByteArray
 | Base64
 | [source, JSON]
 ----
-{ "$type": "Base64",
-  "_value": "A2+/" }
+{
+  "$type": "Base64",
+  "_value": "A2+/"
+}
 ----
 
 | LIST
 | List
 | [source, JSON]
 ----
-{ "$type": "List",
-  "_value": [{"$type": "String",
-             "_value": "A"},
-            {"$type": "String",
-             "_value": "B"}] }
+{
+  "$type": "List",
+  "_value": [
+    {
+      "$type": "String",
+      "_value": "A"
+    },
+    {
+      "$type": "String",
+      "_value": "B"
+    }
+  ]
+}
 ----
 
 | MAP
 | Map
 | [source, JSON]
 ----
-{ "$type": "Map",
+{
+  "$type": "Map",
   "_value": {
-    "fieldA" :
-      { "$type": "String",
-        "_value": "A" }
-} }
+    "fieldA": {
+      "$type": "String",
+      "_value": "A"
+    },
+    "fieldB": {
+      "$type": "String",
+      "_value": "B"
+    }
+  }
+}
 ----
 
 | DATE
 | Date
 | [source, JSON]
 ----
-{ "$type": "Date",
-  "_value": "2015-03-26" }
+{
+  "$type": "Date",
+  "_value": "2015-03-26"
+}
 ----
 
 | ZONED TIME
 | Time
 | [source, JSON]
 ----
-{ "$type": "Time",
-  "_value": "12:50:35.556+01:00" }
+{
+  "$type": "Time",
+  "_value": "12:50:35.556+01:00"
+}
 ----
 
 | LOCAL TIME
 | LocalTime
 | [source, JSON]
 ----
-{ "$type": "LocalTime",
-  "_value": "12:50:35.556" }
+{
+  "$type": "LocalTime",
+  "_value": "12:50:35.556"
+}
 ----
 
 | ZONED DATETIME
 | ZonedDateTime
 | [source, JSON]
 ----
-{ "$type": "ZonedDateTime",
-  "_value": "2015-11-21T21:40:32.142Z[Antarctica/Troll]" }
+{
+  "$type": "ZonedDateTime",
+  "_value": "2015-11-21T21:40:32.142Z[Antarctica/Troll]"
+}
 ----
 
 | LOCAL DATETIME
 | LocalDateTime
 | [source, JSON]
 ----
-{ "$type": "LocalDateTime",
-  "_value": "2015-07-04T19:32:24" }
+{
+  "$type": "LocalDateTime",
+  "_value": "2015-07-04T19:32:24"
+}
 ----
 
 | DURATION
-| null
+| Duration
 | [source, JSON]
 ----
-{ "$type": "Duration",
-  "_value": "P14DT16H12M" }
+{
+  "$type": "Duration",
+  "_value": "P14DT16H12M"
+}
 ----
 
 | POINT
@@ -462,7 +657,7 @@ This section details how link:{neo4j-docs-base-uri}/cypher-manual/current/values
 ----
 
 [NOTE]
-The direction of the relationship in a path is encoded in the start and end node element IDs.
-The order of returned nodes and relationships in a path is not representative of the direction of relationships.
+The direction of the relationship in a path is only encoded in the start and end node element IDs.
+The order of returned nodes and relationships is not representative of the direction of relationships.
 
 |===
