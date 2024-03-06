@@ -102,14 +102,14 @@ For example, the two following requests result in the exact same response, even 
 [source, JSON]
 ----
 {
-  "statement": "RETURN \"2024-01-01T21:40:32-01:00\""
+  "statement": "RETURN '2024-01-01T21:40:32-01:00'"
 }
 ----
 
 [source, JSON]
 ----
 {
-  "statement": "RETURN datetime(\"2024-01-01T21:40:32-01:00\")"
+  "statement": "RETURN datetime('2024-01-01T21:40:32-01:00')"
 }
 ----
 ====
@@ -138,9 +138,9 @@ If you wish to also submit parameters with this format, set `Content-Type: appli
 [source, headers]
 ----
 POST http://localhost:7474/db/v2/query/neo4j
+Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
 Accept: application/vnd.neo4j.query
 Content-Type: application/vnd.neo4j.query
-Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
 ----
 
 [source, JSON]
@@ -209,7 +209,7 @@ Content-Type: application/json
 This section details how link:{neo4j-docs-base-uri}/cypher-manual/current/values-and-types/[Cypher types] are labeled in Jolt.
 
 
-[options="header", cols=".^m,.^m,a"]
+[options="header", cols=".^1m,.^1m,3a"]
 |===
 | Cypher type
 | Query API type
@@ -217,10 +217,252 @@ This section details how link:{neo4j-docs-base-uri}/cypher-manual/current/values
 
 | NULL
 | null
-|
-  { "$type": "Null",
-    "_value": null }
+| [source, JSON]
+----
+{ "$type": "Null",
+  "_value": null }
+----
+
+| BOOLEAN
+| Boolean
+| [source, JSON]
+----
+{ "$type": "Boolean",
+  "_value": true }
+----
+
+| INTEGER
+| Integer
+| [source, JSON]
+----
+{ "$type": "Integer",
+  "_value": "123" }
+----
+
+| FLOAT
+| Float
+| [source, JSON]
+----
+{ "$type": "Float",
+  "_value": "4.56" }
+----
+
+| STRING
+| String
+| [source, JSON]
+----
+{ "$type": "String",
+  "_value": "Hello World" }
+----
+
+| ByteArray
+| Base64
+| [source, JSON]
+----
+{ "$type": "Base64",
+  "_value": "A2+/" }
+----
+
+| LIST
+| List
+| [source, JSON]
+----
+{ "$type": "List",
+  "_value": [{"$type": "String",
+             "_value": "A"},
+            {"$type": "String",
+             "_value": "B"}] }
+----
+
+| MAP
+| Map
+| [source, JSON]
+----
+{ "$type": "Map",
+  "_value": {
+    "fieldA" :
+      { "$type": "String",
+        "_value": "A" }
+} }
+----
+
+| DATE
+| Date
+| [source, JSON]
+----
+{ "$type": "Date",
+  "_value": "2015-03-26" }
+----
+
+| ZONED TIME
+| Time
+| [source, JSON]
+----
+{ "$type": "Time",
+  "_value": "12:50:35.556+01:00" }
+----
+
+| LOCAL TIME
+| LocalTime
+| [source, JSON]
+----
+{ "$type": "LocalTime",
+  "_value": "12:50:35.556" }
+----
+
+| ZONED DATETIME
+| ZonedDateTime
+| [source, JSON]
+----
+{ "$type": "ZonedDateTime",
+  "_value": "2015-11-21T21:40:32.142Z[Antarctica/Troll]" }
+----
+
+| LOCAL DATETIME
+| LocalDateTime
+| [source, JSON]
+----
+{ "$type": "LocalDateTime",
+  "_value": "2015-07-04T19:32:24" }
+----
+
+| DURATION
+| null
+| [source, JSON]
+----
+{ "$type": "Duration",
+  "_value": "P14DT16H12M" }
+----
+
+| POINT
+| Point
+| [source, JSON]
+----
+{
+  "$type": "Point",
+  "_value": {
+    "coordinates": [
+      2.3,
+      4.5,
+      2.0
+    ],
+    "crs": {
+      "srid": 9157,
+      "name": "cartesian-3d",
+      "type": "link",
+      "properties": {
+        "href": "http://spatialreference.org/ref/sr-org/9157/ogcwkt/",
+        "type": "ogcwkt"
+      }
+    }
+  }
+}
+----
+
+| NODE
+| Node
+| [source, JSON]
+----
+{
+  "$type": "Node",
+  "_value": {
+    "_element_id": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:2",
+    "_labels": [
+      "Person"
+    ],
+    "_properties": {
+      "name": {
+        "$type": "String",
+        "_value": "Phil"
+      }
+    }
+  }
+}
+----
+
+| RELATIONSHIP
+| Relationship
+| [source, JSON]
+----
+{
+  "$type": "Relationship",
+  "_value": {
+    "_element_id": "5:ff04df25-ff2b-4b55-98f8-6888297b025e:2",
+    "_start_node_element_id": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:0",
+    "_end_node_element_id": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:2",
+    "_type": "LIKES",
+    "_properties": {
+      "since": {
+        "$type": "String",
+        "_value": "forever!"
+      }
+    }
+  }
+}
+----
+
+| PATH
+| Path
+| [source, JSON]
+----
+{
+  "$type": "Path",
+  "_value": [
+    {
+      "$type": "Node",
+      "_value": {
+        "_element_id": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:0",
+        "_labels": [
+          "Person"
+        ],
+        "_properties": {
+          "name": {
+            "$type": "String",
+            "_value": "Alice"
+          },
+          "age": {
+            "$type": "Integer",
+            "_value": "42"
+          }
+        }
+      }
+    },
+    {
+      "$type": "Relationship",
+      "_value": {
+        "_element_id": "5:ff04df25-ff2b-4b55-98f8-6888297b025e:2",
+        "_start_node_element_id": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:0",
+        "_end_node_element_id": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:2",
+        "_type": "LIKES",
+        "_properties": {
+          "since": {
+            "$type": "String",
+            "_value": "forever!"
+          }
+        }
+      }
+    },
+    {
+      "$type": "Node",
+      "_value": {
+        "_element_id": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:2",
+        "_labels": [
+          "Person"
+        ],
+        "_properties": {
+          "name": {
+            "$type": "String",
+            "_value": "Phil"
+          }
+        }
+      }
+    }
+  ]
+}
+----
+
+[NOTE]
+The direction of the relationship in a path is encoded in the start and end node element IDs.
+The order of returned nodes and relationships in a path is not representative of the direction of relationships.
 
 |===
-
-
