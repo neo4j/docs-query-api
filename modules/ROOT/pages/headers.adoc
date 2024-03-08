@@ -1,3 +1,5 @@
+:page-role: beta
+
 = Headers
 
 This page contains a full list of headers you may use to tweak the API behavior, or that the API may return in responses.

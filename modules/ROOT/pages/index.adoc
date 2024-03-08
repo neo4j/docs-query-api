@@ -1,11 +1,11 @@
 :description: The Query API allows to execute Cypher statements against a Neo4j server through HTTP requests.
+:page-role: beta
 
 = Introduction
 
 [WARNING]
-====
-The Query API is currently not available on on-prem?
-====
+The Query API is currently only available on Aura.
+To run queries over HTTP on on-prem instances, use the link:https://neo4j.com/docs/http-api/current/[HTTP API].
 
 The Query API allows to execute Cypher statements against a Neo4j server through HTTP requests.
 

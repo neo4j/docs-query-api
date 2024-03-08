@@ -1,3 +1,5 @@
+:page-role: beta
+
 = Route queries to read cluster members
 
 In a cluster environment, all queries are routed to writer members by default.

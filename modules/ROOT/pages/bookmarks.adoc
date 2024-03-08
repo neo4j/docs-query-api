@@ -1,3 +1,5 @@
+:page-role: beta
+
 = Coordinate transactions and enforce causal consistency
 
 When working with a cluster, _bookmarks_ allow you to chain transactions and enforce <<causal_consistency>>.

@@ -1,3 +1,5 @@
+:page-role: beta
+
 = Profile queries
 
 If a query is prepended with `EXPLAIN`, the server will return the _execution plan_ it would use to run it, but not actually execute it.

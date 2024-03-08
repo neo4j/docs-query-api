@@ -1,3 +1,5 @@
+:page-role: beta
+
 = Retrieve query statistics
 
 If `includeStats: true` is added to the request body, the server returns query statistics (also known as query counters) alongside the query result. Statistics tell how the database was altered by the query.

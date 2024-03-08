@@ -1,3 +1,5 @@
+:page-role: beta
+
 = Query the database
 
 To run a query on a database, submit a `POST` request to the following endpoint:
