@@ -1,6 +1,6 @@
 name: query-api
 title: Query API
-version: '5'
+version: '2'
 start_page: ROOT:index.adoc
 nav:
 - modules/ROOT/content-nav.adoc
