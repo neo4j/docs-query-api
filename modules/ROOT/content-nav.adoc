@@ -1,10 +1,11 @@
 * xref:index.adoc[]
 * xref:authentication-authorization.adoc[]
 * xref:query.adoc[]
-* xref:routing.adoc[]
+// * xref:routing.adoc[]
 // * xref:query-statistics.adoc[]
 * xref:profile-query.adoc[]
 * xref:bookmarks.adoc[]
+// * xref:impersonation.adoc[]
 
 * **Reference**
 * xref:endpoints.adoc[]
