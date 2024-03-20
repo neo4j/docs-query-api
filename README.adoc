@@ -1,8 +1,6 @@
-:docs-uri: https://neo4j.com/docs
+= Query API docs
 
-= docs-query-api
-
-This repository contains the AsciiDoc and other sources to build the link:{docs-uri}/query-api[Neo4j Query API].
+This repository contains the AsciiDoc and other sources to build the link:https://neo4j.com/docs/query-api[Neo4j Query API].
 
 
 == Installation
@@ -13,7 +11,7 @@ To install the dependencies run:
 
 [source, sh]
 ----
-npm install
+npm i
 ----
 
 
@@ -23,19 +21,9 @@ To preview the docs, run:
 
 [source, sh]
 ----
-npm run start
+npm start
 ----
 
 This will build a set of HTML files in `build/site` and then serve them through an express server at http://localhost:8000.
 The start script will also listen for changes and automatically rebuild the files automatically.
 You will still need to refresh the page to view the changes.
-
-
-== Contributing
-
-To make changes to this repository, please create a fork of this repo and a new branch to stage your changes.
-Your branch should be prefixed with the version number, for example `4.3-new-examples`.
-
-When you are finished with your changes push the branch to your fork and create a Pull Request.
-Please add at least one approver.
-
