@@ -1,0 +1,53 @@
+:page-role: beta
+
+= Run queries as a different user
+
+You can execute a query under the security context of a different user through the parameter `impersonatedUser` in the request body, specifying the name of the user to impersonate.
+For this to work, the user under which the request is sent needs to have the link:https://neo4j.com/docs/cypher-manual/current/administration/access-control/dbms-administration#access-control-dbms-administration-impersonation[appropriate permissions].
+
+When impersonating a user, the query is run within the complete security context of the impersonated user and not the authenticated user (i.e. home database, permissions, etc.).
+
+====
+[discrete]
+=== Example request
+
+[source, headers]
+----
+POST http://localhost:7474/db/neo4j/query/v2
+Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
+----
+
+[source, JSON]
+----
+{
+  "statement": "MATCH (n:Person) RETURN n.name LIMIT 1",
+  "impersonatedUser": "anotherUser"  // mark-line
+}
+----
+
+[discrete]
+=== Example response
+
+[source, headers]
+----
+202: OK
+Content-Type: application/json
+----
+
+[source, JSON]
+----
+{
+  "data": {
+    "fields": [
+      "n.name"
+    ],
+    "values": [
+      "Alice"
+    ]
+  },
+  "bookmarks": [
+    "FB:kcwQ/wTfJf8rS1WY+GiIKXsCXgyQ"
+  ]
+}
+----
+====
