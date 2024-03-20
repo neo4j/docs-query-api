@@ -20,7 +20,7 @@ Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
 ----
 {
   "statement": "MATCH (n:Person) RETURN n LIMIT 2",
-  "accessMode": "Read"  // mark-line
+  "accessMode": "Read"
 }
 ----
 

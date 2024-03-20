@@ -32,9 +32,9 @@ All responses include a `bookmarks` field containing a list of encoded bookmarks
       }
     ]
   },
-  "bookmarks": [  // mark-line
-    "FB:kcwQ/wTfJf8rS1WY+GiIKXsCXgmQ"  // mark-line
-  ]  // mark-line
+  "bookmarks": [
+    "FB:kcwQ/wTfJf8rS1WY+GiIKXsCXgmQ"
+  ]
 }
 ----
 
@@ -63,7 +63,7 @@ Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
     "source": "Alice",
     "end": "Lucy"
   },
-  "bookmarks": ["FB:kcwQt8DpQx5zR0uN3Oj/OudM3QaQ", "FB:kcwQy9mp3ioyRom386bZDRRcuCiQ"]  // mark-line
+  "bookmarks": ["FB:kcwQt8DpQx5zR0uN3Oj/OudM3QaQ", "FB:kcwQy9mp3ioyRom386bZDRRcuCiQ"]
 }
 ----
 ====
