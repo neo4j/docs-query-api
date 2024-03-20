@@ -5,7 +5,7 @@
 * xref:query-statistics.adoc[]
 * xref:profile-query.adoc[]
 * xref:bookmarks.adoc[]
-// * xref:impersonation.adoc[]
+* xref:impersonation.adoc[]
 
 * **Reference**
 * xref:endpoints.adoc[]
