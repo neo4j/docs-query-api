@@ -32,6 +32,7 @@ shared/
 src/main/_common-and-old/
 tags
 target/
+.package-lock.json
 
 # docs project
 .env
