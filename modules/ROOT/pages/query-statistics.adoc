@@ -2,7 +2,8 @@
 
 = Retrieve query statistics
 
-If `includeStats: true` is added to the request body, the server returns query statistics (also known as query counters) alongside the query result. Statistics tell how the database was altered by the query.
+If `includeQueryStatistics: true` is added to the request body, the server returns query statistics (also known as query counters) alongside the query result.
+Statistics tell how the database was altered by the query.
 
 ====
 [discrete]
@@ -17,15 +18,11 @@ Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
 [source, JSON]
 ----
 {
-  "statements": [
-    {
-      "statement": "CREATE (n:Person {name: $name}) RETURN n.name",
-      "parameters": {
-        "name": "Peter"
-       },
-      "includeStats": true  // mark-line
-    }
-  ]
+  "statement": "CREATE (n:Person {name: $name}) RETURN n.name",
+  "parameters": {
+  "name": "Peter"
+  },
+  "includeQueryStatistics": true
 }
 ----
 
@@ -41,30 +38,33 @@ Content-Type: application/json
 [source, JSON]
 ----
 {
-  "results" : [ {
-    "columns" : [ "n.name" ],
-    "data" : [ {
-      "row" : [ "Peter" ],
-      "meta" : [ null ]
-    } ],
-    "stats" : {
-      "contains_updates" : true,
-      "nodes_created" : 1,
-      "nodes_deleted" : 0,
-      "properties_set" : 0,
-      "relationships_created" : 0,
-      "relationship_deleted" : 0,
-      "labels_added" : 1,
-      "labels_removed" : 0,
-      "indexes_added" : 0,
-      "indexes_removed" : 0,
-      "constraints_added" : 0,
-      "constraints_removed" : 0,
-      "contains_system_updates" : false,
-      "system_updates" : 0
-    }
-  } ],
-  "errors" : [ ]
+  "data": {
+    "fields": [
+        "n.name"
+    ],
+    "values": [
+        "Peter"
+    ]
+  },
+  "queryStatistics": {
+    "containsUpdates": true,
+    "nodesCreated": 1,
+    "nodesDeleted": 0,
+    "propertiesSet": 1,
+    "relationshipsCreated": 0,
+    "relationshipsDeleted": 0,
+    "labelsAdded": 1,
+    "labelsRemoved": 0,
+    "indexesAdded": 0,
+    "indexesRemoved": 0,
+    "constraintsAdded": 0,
+    "constraintsRemoved": 0,
+    "containsSystemUpdates": false,
+    "systemUpdates": 0
+  },
+  "bookmarks": [
+    "FB:kcwQaCYpl4jjRRiD7NlEZ0YJ9MkB8pA="
+  ]
 }
 ----
 ====
