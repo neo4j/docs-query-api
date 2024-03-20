@@ -14,7 +14,7 @@ For more information, see link:{neo4j-docs-base-uri}/cypher-manual/current/plann
 
 [source, headers]
 ----
-POST http://localhost:7474/db/v2/query/neo4j
+POST http://localhost:7474/db/neo4j/query/v2
 Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
 ----
 

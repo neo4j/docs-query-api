@@ -5,7 +5,7 @@
 To run a query on a database, submit a `POST` request to the following endpoint:
 
 ----
-http://<host>:<port>/db/v2/query/<databaseName>
+http://<host>:<port>/db/<databaseName>/query/v2
 ----
 
 - `<host>` is where the Neo4j instance is located (example: `localhost`, `xxx.databases.neo4j.io`),
@@ -27,7 +27,7 @@ Each request must include an `Authorization` header, see xref:authentication-aut
 
 [source, headers]
 ----
-POST http://localhost:7474/db/v2/query/neo4j
+POST http://localhost:7474/db/neo4j/query/v2
 Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
 ----
 

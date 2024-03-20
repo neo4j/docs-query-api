@@ -33,7 +33,7 @@ To request this format, set `Accept: application/json` in the request headers (o
 
 [source, headers]
 ----
-POST http://localhost:7474/db/v2/query/neo4j
+POST http://localhost:7474/db/neo4j/query/v2
 Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
 ----
 
@@ -293,7 +293,7 @@ If you wish to also submit parameters with this format, set `Content-Type: appli
 
 [source, headers]
 ----
-POST http://localhost:7474/db/v2/query/neo4j
+POST http://localhost:7474/db/neo4j/query/v2
 Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
 Accept: application/vnd.neo4j.query
 Content-Type: application/vnd.neo4j.query

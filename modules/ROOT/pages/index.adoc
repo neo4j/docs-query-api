@@ -3,9 +3,9 @@
 
 = Introduction
 
-[WARNING]
-The Query API is currently only available on Aura.
-To run queries over HTTP on on-prem instances, use the link:https://neo4j.com/docs/http-api/current/[HTTP API].
+[NOTE]
+The Query API is enabled by default on Aura, but disabled on on-prem instances.
+To enable it on on-prem, add `QUERY_API_ENDPOINTS` to the configuration setting link:https://neo4j.com/docs/operations-manual/current/configuration/configuration-settings/#config_server.http_enabled_modules[`server.http_enabled_modules`].
 
 The Query API allows to execute Cypher statements against a Neo4j server through HTTP requests.
 

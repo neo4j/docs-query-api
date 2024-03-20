@@ -10,33 +10,7 @@ All responses include a `bookmarks` field containing a list of encoded bookmarks
 
 ====
 [discrete]
-=== Example request
-
-[source, headers]
-----
-POST http://localhost:7474/db/v2/query/neo4j
-Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
-----
-
-[source, JSON]
-----
-{
-  "statement": "MERGE (n:Person {name: $name, age: $age}) RETURN n",
-  "parameters": {
-    "name": "Alice",
-    "age": 42
-  }
-}
-----
-
-[discrete]
 === Example response
-
-[source, headers]
-----
-202: Accepted
-Content-Type: application/json
-----
 
 [source, JSON, role=nocollapse]
 ----
@@ -77,7 +51,7 @@ In the example below, the server does not execute the transaction until it has r
 
 [source, headers]
 ----
-POST http://localhost:7474/db/v2/query/neo4j
+POST http://localhost:7474/db/neo4j/query/v2
 Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
 ----
 
