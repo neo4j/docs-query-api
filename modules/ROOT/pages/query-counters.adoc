@@ -1,9 +1,9 @@
 :page-role: beta
 
-= Retrieve query statistics
+= Retrieve query counters
 
-If `includeQueryStatistics: true` is added to the request body, the server returns query statistics (also known as query counters) alongside the query result.
-Statistics tell how the database was altered by the query.
+If `includeCounters: true` is added to the request body, the server returns query counters alongside the query result.
+Counters tell how the database was altered by the query.
 
 ====
 [discrete]
@@ -22,7 +22,7 @@ Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
   "parameters": {
   "name": "Peter"
   },
-  "includeQueryStatistics": true
+  "includeCounters": true
 }
 ----
 
@@ -46,7 +46,7 @@ Content-Type: application/json
         "Peter"
     ]
   },
-  "queryStatistics": {
+  "counters": {
     "containsUpdates": true,
     "nodesCreated": 1,
     "nodesDeleted": 0,
