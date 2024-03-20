@@ -39,11 +39,12 @@ GET http://localhost:7474/
 ----
 {
   "bolt_routing": "neo4j://localhost:7687",
+  "query": "http://localhost:7474/db/{databaseName}/query/v2",
   "dbms/cluster": "http://localhost:7474/dbms/cluster",
   "db/cluster": "http://localhost:7474/db/{databaseName}/cluster",
   "transaction": "http://localhost:7474/db/{databaseName}/tx",
   "bolt_direct": "bolt://localhost:7687",
-  "neo4j_version": "5.18.0",
+  "neo4j_version": "5.19.0",
   "neo4j_edition": "enterprise",
   "auth_config": {
     "oidc_providers": []
