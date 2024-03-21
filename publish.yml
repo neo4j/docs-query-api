@@ -7,7 +7,7 @@ content:
   sources:
   - url: ./
     branches: ['HEAD']
-    edit_url: https://github.com/neo4j/docs-query-api/dev/{refname}/{path}
+    edit_url: https://github.com/neo4j/docs-query-api/tree/{refname}/{path}
     exclude:
     - '!**/_includes/*'
     - '!**/readme.adoc'
