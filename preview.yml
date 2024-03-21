@@ -14,7 +14,7 @@ content:
     - '!**/README.adoc'
 ui:
   bundle:
-    url: /home/stefano/git/docs-ui/build/ui-bundle.zip
+    url: https://static-content.neo4j.com/build/ui-bundle-latest.zip
     snapshot: true
   output_dir: /assets
 
