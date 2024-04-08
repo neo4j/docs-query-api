@@ -35,6 +35,7 @@ To request this format, set `Accept: application/json` in the request headers (o
 ----
 POST http://localhost:7474/db/neo4j/query/v2
 Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
+Content-Type: application/json
 ----
 
 [source, JSON]

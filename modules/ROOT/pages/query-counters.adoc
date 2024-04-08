@@ -13,6 +13,7 @@ Counters tell how the database was altered by the query.
 ----
 POST http://localhost:7474/db/neo4j/query/v2
 Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
+Content-Type: application/json
 ----
 
 [source, JSON]

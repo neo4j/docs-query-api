@@ -11,6 +11,7 @@ This page contains a list of the endpoints that the Query API provides, plus poi
 
 |/
 |To obtain a list of available endpoints on your installation and some basic server information.
+label:not-on-aura[]
 
 |/db/<databaseName>/query/v2
 |To submit queries. +
@@ -19,9 +20,10 @@ For more information, see xref:query.adoc[].
 |===
 
 
+[role=label--not-on-aura]
 [[discovery-api]]
-.Discovery API
-====
+== Discovery API
+
 To obtain a list of available endpoints on your installation, together with some basic server information, send an un-authenticated `GET` request to the server root.
 
 [discrete]
@@ -54,4 +56,3 @@ GET http://localhost:7474/
 
 [NOTE]
 Bolt routing is meant to be used with link:{neo4j-docs-base-uri}/create-applications/[client libraries (Drivers)].
-====

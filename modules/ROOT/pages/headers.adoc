@@ -21,7 +21,7 @@ For more information, see xref:authentication-authorization.adoc[].
 
 |Content-Type
 |The format of the request body. +
-Possible values are `application/json` (default) and `application/vnd.neo4j.query`. +
+Possible values are `application/json` and `application/vnd.neo4j.query`. +
 For more information, see xref:result-formats.adoc[].
 
 |===

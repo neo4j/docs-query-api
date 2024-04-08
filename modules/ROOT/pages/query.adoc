@@ -29,6 +29,7 @@ Each request must include an `Authorization` header, see xref:authentication-aut
 ----
 POST http://localhost:7474/db/neo4j/query/v2
 Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
+Content-Type: application/json
 ----
 
 [source, JSON]
@@ -78,7 +79,7 @@ Content-Type: application/json
 ----
 
 <1> Because the server does not know whether the request will be successful or not when it sends the HTTP status code, all API requests return a `202` status code, regardless of whether the statements were successfully executed.
-The only exception is authentication errors, which result in a 301 status code.
+The only exception is authentication errors, which result in a `401` status code.
 <2> Query result keys.
 <3> Query result values, in the same order as `fields`. +
 For more information on what format the values may take, see xref:result-formats.adoc[].

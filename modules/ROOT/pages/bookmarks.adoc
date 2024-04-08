@@ -53,6 +53,7 @@ In the example below, the server does not execute the transaction until it has r
 ----
 POST http://localhost:7474/db/neo4j/query/v2
 Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
+Content-Type: application/json
 ----
 
 [source, JSON]
