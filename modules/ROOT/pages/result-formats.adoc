@@ -132,7 +132,7 @@ true
 ----
 
 | ByteArray
-| string
+| string (base64)
 | [source, JSON]
 ----
 "A2+/"
@@ -157,7 +157,7 @@ true
 
 | Temporal +
 (DATE, ZONED TIME, LOCAL TIME, ZONED DATETIME, LOCAL DATETIME, DURATION)
-| string
+| string (ISO-8601)
 | [source, JSON]
 ----
 "2015-03-26"
@@ -169,7 +169,7 @@ true
 ----
 
 | POINT
-| string
+| string (WKT)
 | [source, JSON]
 ----
 "SRID=7203;POINT(1.2 3.4)"
