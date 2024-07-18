@@ -87,7 +87,9 @@ Authorization: Bearer eGJoa2pubHZpYW56dGdocXdhd3hxZmUK
 =====
 
 
-== Missing authorization
+== Errors
+
+=== Missing authorization
 
 If an `Authorization` header is not supplied (and authentication is not disabled), the server replies with status `401 Forbidden` and an error.
 
@@ -121,7 +123,7 @@ Content-Type: application/json
 ====
 
 
-== Incorrect authentication
+=== Incorrect authentication
 
 If an incorrect username or password is provided, the server replies with status `401 Forbidden` and an error.
 
@@ -156,7 +158,7 @@ Content-Type: application/json
 ====
 
 
-== Invalid authentication
+=== Invalid authentication
 
 If the content of the `Authorization` header is not properly base64-encoded, the server replies with status `401 Forbidden` and an error.
 
