@@ -131,6 +131,68 @@ The benefits of using query parameters are twofold:
 For general information on parameters, see link:{neo4j-docs-base-uri}/cypher-manual/current/syntax/parameters/[Cypher Manual -> Parameters].
 
 
+== Server notifications
+
+If the server generates any link:{neo4j-docs-base-uri}/status-codes/current/notifications[notifications], they will be returned in the `notifications` key of the response object (as a list).
+Notifications include recommendations for performance improvements, warnings about the usage of deprecated features, and other hints about sub-optimal usage of Neo4j.
+
+====
+[discrete]
+=== Example request
+
+[source, headers]
+----
+POST http://localhost:7474/db/neo4j/query/v2
+Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
+Content-Type: application/json
+----
+
+[source, JSON]
+----
+{
+  "statement": "MATCH p=shortestPath((:Person {name: $from})-[*]->(:Person {name: $to})) RETURN p",
+  "parameters": {
+    "from": "Alice",
+    "to": "Bob"
+  }
+}
+----
+
+[discrete]
+=== Example response
+
+[source, headers]
+----
+202: Accepted
+Content-Type: application/json
+----
+
+[source, JSON, role=nocollapse]
+----
+{
+  "data": [
+    ...
+  ],
+  "notifications": [
+    {
+      "code": "Neo.ClientNotification.Statement.UnboundedVariableLengthPattern",
+      "description": "Using shortest path with an unbounded pattern will likely result in long execution times. It is recommended to use an upper limit to the number of node hops in your pattern.",
+      "severity": "INFORMATION",
+      "title": "The provided pattern is unbounded, consider adding an upper limit to the number of node hops.",
+      "position": {
+          "offset": 21,
+          "line": 1,
+          "column": 22
+      },
+      "category": "PERFORMANCE"
+    }
+  ],
+  ...
+}
+----
+====
+
+
 ifndef::backend-pdf[]
 [discrete.glossary]
 == Glossary
