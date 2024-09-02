@@ -1,5 +1,3 @@
-:page-role: beta
-
 = Query the database
 
 To run a query on a database, submit a `POST` request to the following endpoint:
@@ -15,7 +13,7 @@ http://<host>:<port>/db/<databaseName>/query/v2
 The server wraps the submitted Cypher query in a (implicit) <<transaction>> for you.
 This means that in case any part of the query fails, the database will be reverted back to its status before any part of the query was executed.
 
-It's not possible to control the lifecycle of transactions through the Query API.
+It's currently not possible to control the lifecycle of transactions through the Query API.
 If you need that flexibility, checkout the link:https://neo4j.com/docs/http-api/current[HTTP API] and  link:https://neo4j.com/docs/create-applications/[language libraries].
 
 [TIP]

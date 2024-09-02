@@ -1,5 +1,5 @@
 :description: Query API result format.
-:page-role: beta
+
 
 = Result formats
 

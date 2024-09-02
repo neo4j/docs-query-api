@@ -1,5 +1,3 @@
-:page-role: beta
-
 = Retrieve query counters
 
 If `includeCounters: true` is added to the request body, the server returns query counters alongside the query result.

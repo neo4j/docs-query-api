@@ -1,5 +1,5 @@
 :page-toclevels: -1
-:page-role: beta
+
 
 = Endpoints
 
@@ -11,7 +11,6 @@ This page contains a list of the endpoints that the Query API provides, plus poi
 
 |/
 |To obtain a list of available endpoints on your installation and some basic server information.
-label:not-on-aura[]
 
 |/db/<databaseName>/query/v2
 |To submit queries. +

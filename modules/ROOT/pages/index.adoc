@@ -1,13 +1,12 @@
 :description: The Query API allows to execute Cypher statements against a Neo4j server through HTTP requests.
-:page-role: beta new-5.19
+:page-role: new-5.19
 
 
 = Introduction
 
 [NOTE]
-The Query API is disabled by default.
+The Query API is enabled by default on all <<Aura>> tiers, but disabled on self-managed instances.
 To enable it, add `QUERY_API_ENDPOINTS` to the configuration setting link:https://neo4j.com/docs/operations-manual/current/configuration/configuration-settings/#config_server.http_enabled_modules[`server.http_enabled_modules`].
-The Query API is not available on Aura yet.
 
 The Query API allows to execute Cypher statements against a Neo4j server through HTTP requests.
 
@@ -16,14 +15,15 @@ If there exists an official library (driver) for the language you are using, con
 
 This guide assumes that you have:
 
-- A running Neo4j instance -- if not, check out how to link:{neo4j-docs-base-uri}/operations-manual/current/installation/[install Neo4j].
-- Some familiarity with <<Cypher>> -- if you need a hand, check out link:{neo4j-docs-base-uri}/getting-started/cypher-intro/[Getting started -> Cypher].
+- A running instance of Neo4j -- If you don't have one, link:https://neo4j.com/docs/operations-manual/current/installation/[install Neo4j locally] or sign up for an link:https://neo4j.com/cloud/platform/aura-graph-database/[Aura cloud instance].
+- Some familiarity with <<Cypher>> -- If you are new to it, check out link:https://neo4j.com/docs/getting-started/cypher-intro/[Getting started -> Cypher].
 
-The Query API supports HTTP/2 as well as HTTP/1.1, unless either is explicitly disabled in the server configuration setting link:https://neo4j.com/docs/operations-manual/current/configuration/configuration-settings/#config_server.http_enabled_transports[`server.http_enabled_transports`].
-It's up to the client to initiate a connection with the preferred protocol.
+**On self-managed instances**, the API uses port 7474 for HTTP and port 7473 for HTTPS by default. Ports can be altered via the configuration settings link:https://neo4j.com/docs/operations-manual/current/configuration/configuration-settings/#config_server.http.listen_address[`server.http.listen_address`] and link:https://neo4j.com/docs/operations-manual/current/configuration/configuration-settings/#config_server.https.listen_address[`server.https.listen_address`]. +
+**Aura instances** support only HTTPS through port 443.
 
 [TIP]
-By default, the Query API uses port 7474 for HTTP and port 7473 for HTTPS.
+The Query API supports HTTP/2 as well as HTTP/1.1, unless either is explicitly disabled in the server configuration setting link:https://neo4j.com/docs/operations-manual/current/configuration/configuration-settings/#config_server.http_enabled_transports[`server.http_enabled_transports`].
+It's up to the client to initiate a connection with the preferred protocol.
 
 
 ifndef::backend-pdf[]
