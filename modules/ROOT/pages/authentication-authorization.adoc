@@ -1,5 +1,3 @@
-:page-role: beta
-
 = Authorize requests
 
 Unless authentication is disabled on the server, all requests must be authorized using the login credentials of a valid user.

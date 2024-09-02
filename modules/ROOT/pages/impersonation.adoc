@@ -1,5 +1,3 @@
-:page-role: beta
-
 = Run queries as a different user
 
 You can execute a query under the security context of a different user through the parameter `impersonatedUser` in the request body, specifying the name of the user to impersonate.
