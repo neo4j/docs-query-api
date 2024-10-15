@@ -5,8 +5,9 @@
 = Introduction
 
 [NOTE]
-The Query API is enabled by default on all <<Aura>> tiers, but disabled on self-managed instances.
-To enable it, add `QUERY_API_ENDPOINTS` to the configuration setting link:https://neo4j.com/docs/operations-manual/current/configuration/configuration-settings/#config_server.http_enabled_modules[`server.http_enabled_modules`].
+The Query API is enabled by default. 
+It was however disabled by default on self-managed instances versions < 5.25.
+To enable it on those deployments, add `QUERY_API_ENDPOINTS` to the configuration setting link:https://neo4j.com/docs/operations-manual/current/configuration/configuration-settings/#config_server.http_enabled_modules[`server.http_enabled_modules`].
 
 The Query API allows to execute Cypher statements against a Neo4j server through HTTP requests.
 
