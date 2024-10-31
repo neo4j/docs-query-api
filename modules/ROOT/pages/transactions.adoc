@@ -4,10 +4,8 @@ Use transactions to group together related queries which work together to achiev
 As Neo4j is <<ACID>> compliant, queries within a <<transaction>> will either be executed as a whole or not at all: you cannot get a part of the transaction succeed and another fail.
 
 [NOTE]
---
 Cypher queries with link:{neo4j-docs-base-uri}/cypher-manual/current/clauses/call-subquery/#subquery-call-in-transactions[`CALL {} IN TRANSACTIONS`] can not be executed in explicit transactions.
 Submit those queries with xref:query.adoc[implicit transactions] instead.
---
 
 
 == Create a transaction
