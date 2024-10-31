@@ -1,6 +1,7 @@
 * xref:index.adoc[]
 * xref:authentication-authorization.adoc[]
 * xref:query.adoc[]
+* xref:transactions.adoc[]
 * xref:routing.adoc[]
 * xref:query-counters.adoc[]
 * xref:profile-query.adoc[]
