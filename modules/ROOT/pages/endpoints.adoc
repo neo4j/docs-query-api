@@ -16,6 +16,19 @@ This page contains a list of the endpoints that the Query API provides, plus poi
 |To submit queries. +
 For more information, see xref:query.adoc[].
 
+|/db/<databaseName>/query/v2/tx
+|To open an explicit transaction. +
+For more information, see xref:transactions.adoc[].
+
+|/db/<databaseName>/query/v2/tx/<transactionID>
+|To submit queries to an open transaction with ID `<transactionID>`. +
+A `DELETE` request results in a rollback. +
+For more information, see xref:transactions.adoc#_execute_queries[Run transactions -> Execute queries].
+
+|/db/<databaseName>/tx/query/v2/<transactionID>/commit
+|To commit an open transaction with ID `<transactionID>`. +
+For more information, see xref:transactions.adoc#_commit_a_transaction[Run transactions -> Commit a transaction].
+
 |===
 
 

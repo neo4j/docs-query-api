@@ -12,8 +12,7 @@ http://<host>:<port>/db/<databaseName>/query/v2
 
 The server wraps the submitted Cypher query in a (implicit) <<transaction>> for you.
 This means that in case any part of the query fails, the database will be reverted back to its status before any part of the query was executed.
-
-To control the lifecycle of transactions, see xref:transactions.adoc[].
+To run an explicit transaction, see xref:transactions.adoc[].
 
 [TIP]
 Each request must include an `Authorization` header, see xref:authentication-authorization.adoc[] for more information.
