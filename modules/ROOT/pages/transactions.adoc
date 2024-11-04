@@ -97,18 +97,18 @@ neo4j-cluster-affinity: MTAuOC41Ljc6MTc0NzQ=  // <2>
 
 <.> Because the server does not know whether the request will be successful or not when it sends the HTTP status code, all API requests return a `202` status code, regardless of whether the statements were successfully executed.
 The only exception is authentication errors, which result in a `401` status code.
-<.> The header `neo4j-cluster-affinity` identifies the cluster member which is handling the transaction.
-It must be included as a header to all subsequent requests, up until when the transaction is committed or rolled back.
+<.> The header `neo4j-cluster-affinity` identifies the cluster member handling the transaction.
+It must be included as a header to all subsequent requests, including commit/rollback requests.
 <.> Query result keys.
 <.> Query result values, in the same order as `fields`. +
 For more information on what format the values may take, see xref:result-formats.adoc[].
 <.> Entity ID within the database.
-`elementId` should be used with care, as no guarantees are given about the mapping between ID values and elements outside the scope of a single transaction.
+Use `elementId` with care, as no guarantees are given about the mapping between ID values and elements outside the scope of a single transaction.
 For example, using an `elementId` to `MATCH` an element across different transactions is risky.
 <.> Bookmarks are used to enforce an ordering to transactions. +
 For more information, see xref:bookmarks.adoc[].
 <.> Transaction metadata.
-The ID is used as part of subsequent request URIs.
+Use the ID for subsequent request URIs.
 ====
 
 
@@ -195,7 +195,7 @@ Transactions expire automatically after a period of inactivity, after which they
 By default the timeout is 30 seconds, but you can set a different value in the server configuration (link:{neo4j-docs-base-uri}/operations-manual/current/configuration/configuration-settings#config_server.http.transaction_idle_timeout[`server.http.transaction_idle_timeout`]).
 
 The transaction expiration time is reported in each response, under the `transaction` key.
-To keep a transaction alive without submitting new queries, you can submit an empty statement list to the transaction URI.
+To keep a transaction alive without submitting new queries, you can submit an empty statement to the transaction URI.
 
 Attempting to submit queries to an expired transaction results in an error:
 
