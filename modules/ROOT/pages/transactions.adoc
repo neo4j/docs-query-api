@@ -1,0 +1,298 @@
+= Run transactions
+
+Use transactions to group together related queries which work together to achieve a single logical database operation.
+As Neo4j is <<ACID>> compliant, queries within a <<transaction>> will either be executed as a whole or not at all: you cannot get a part of the transaction succeed and another fail.
+
+[NOTE]
+Cypher queries with link:{neo4j-docs-base-uri}/cypher-manual/current/clauses/call-subquery/#subquery-call-in-transactions[`CALL {} IN TRANSACTIONS`] can not be executed in explicit transactions.
+Submit those queries with xref:query.adoc[implicit transactions] instead.
+
+
+== Create a transaction
+
+To open a new (explicit) transaction, submit a `POST` request to the following endpoint:
+
+----
+http://<host>:<port>/db/<databaseName>/query/v2/tx
+----
+
+- `<host>` is where the Neo4j instance is located (example: `localhost`, `xxx.databases.neo4j.io`),
+- `<port>` is the port on which the Neo4j HTTP server is set to listen on (optional; default `7474`),
+- `<databaseName>` is the database you want to query (example: `neo4j`).
+
+[TIP]
+Each request must include an `Authorization` header, see xref:authentication-authorization.adoc[] for more information.
+
+The body of the request may either:
+
+- contain a `statement` object with the Cypher query to execute
+- contain an empty `statement` object
+- be entirely empty.
+
+The two latter options are for avoiding the transaction from timing out. +
+The server will respond with the location of the new transaction.
+
+====
+[discrete]
+=== Example request
+
+[source, headers]
+----
+POST http://localhost:7474/db/neo4j/query/v2/tx
+Accept: application/json
+Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
+Content-Type: application/json
+----
+
+[source, JSON]
+----
+{
+  "statement": "MERGE (n:Person {name: $name, age: $age}) RETURN n AS alice",
+  "parameters": {
+    "name": "Alice",
+    "age": 42
+  }
+}
+----
+
+[discrete]
+=== Example response
+
+[source, headers]
+----
+202: Accepted  // <1>
+Content-Type: application/json
+neo4j-cluster-affinity: MTAuOC41Ljc6MTc0NzQ=  // <2>
+----
+
+[source, JSON]
+----
+{
+  "data": {
+    "fields": [  // <3>
+      "alice"
+    ],
+    "values": [  // <4>
+      {
+        "elementId": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:0",  // <5>
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "name": "Alice",
+          "age": 42
+        }
+      }
+    ]
+  },
+  "bookmarks": [  // <6>
+    "FB:kcwQ/wTfJf8rS1WY+GiIKXsCXgmQ"
+  ],
+  "transaction": {  // <7>
+    "id": "lyU",
+    "expires": "2024-10-22T15:48:29Z"
+  }
+}
+----
+
+<.> Because the server does not know whether the request will be successful or not when it sends the HTTP status code, all API requests return a `202` status code, regardless of whether the statements were successfully executed.
+The only exception is authentication errors, which result in a `401` status code.
+<.> The header `neo4j-cluster-affinity` identifies the cluster member handling the transaction.
+It must be included as a header to all subsequent requests, including commit/rollback requests.
+<.> Query result keys.
+<.> Query result values, in the same order as `fields`. +
+For more information on what format the values may take, see xref:result-formats.adoc[].
+<.> Entity ID within the database.
+Use `elementId` with care, as no guarantees are given about the mapping between ID values and elements outside the scope of a single transaction.
+For example, using an `elementId` to `MATCH` an element across different transactions is risky.
+<.> Bookmarks are used to enforce an ordering to transactions. +
+For more information, see xref:bookmarks.adoc[].
+<.> Transaction metadata.
+Use the ID for subsequent request URIs.
+====
+
+
+== Execute queries
+
+Once a transaction is open, you can submit queries to it by sending more `POST` requests to the following endpoint:
+
+----
+http://<host>:<port>/db/<databaseName>/query/v2/tx/<transactionID>
+----
+
+You can find the transaction ID under the `transaction.id` key of your first request result.
+
+The request must include the header `neo4j-cluster-affinity`, replaying the value the server sent when the transaction was opened.
+
+====
+[discrete]
+=== Example request
+
+[source, headers]
+----
+POST http://localhost:7474/db/neo4j/tx/lyU
+Accept: application/json
+Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
+Content-Type: application/json
+neo4j-cluster-affinity: MTAuOC41Ljc6MTc0NzQ=
+----
+
+[source, JSON]
+----
+{
+  "statement": "MERGE (n:Person {name: $name, age: $age}) RETURN n AS bob",
+  "parameters": {
+    "name": "Bob",
+    "age": 43
+  }
+}
+----
+
+[discrete]
+=== Example response
+
+[source, headers]
+----
+202: Accepted
+Content-Type: application/json
+----
+
+[source, JSON, role=nocollapse]
+----
+{
+  "data": {
+    "fields": [
+      "bob"
+    ],
+    "values": [
+      {
+        "elementId": "4:ff04df25-ff2b-4b55-98f8-6888297b034e:0",
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "name": "Bob",
+          "age": 43
+        }
+      }
+    ]
+  },
+  "bookmarks": [
+    "FB:kcwQ/wTfJf8rS1WY+GiIKXsCXgmQ"
+  ],
+  "transaction": {
+    "id": "lyU",
+    "expires": "2024-10-22T15:48:29Z"
+  }
+}
+----
+====
+
+
+== Transaction expiration and keep alive
+
+Transactions expire automatically after a period of inactivity, after which they are rolled back.
+By default the timeout is 60 seconds, but you can set a different value in the server configuration (link:{neo4j-docs-base-uri}/operations-manual/current/configuration/configuration-settings#config_server.queryapi.transaction_idle_timeout[`server.queryapi.transaction_idle_timeout`]).
+
+The transaction expiration time is reported in each response, under the `transaction` key.
+To keep a transaction alive without submitting new queries, you can submit an empty statement to the transaction URI.
+
+Attempting to submit queries to an expired transaction results in an error:
+
+[source, JSON]
+----
+{
+  "errors": [ {
+    "code": "Neo.ClientError.Request.Invalid",
+    "message": "Transaction with Id: \"lyU\" was not found. It may have timed out and therefore rolled back or the routing header 'neo4j-cluster-affinity' was not provided."
+  } ]
+}
+----
+
+[TIP]
+If a response does not contain the `transaction` key, the corresponding transaction has been closed.
+This usually happens after an error is raised.
+
+
+== Commit a transaction
+
+To commit a transaction, send a `POST` request to the following endpoint:
+
+----
+http://<host>:<port>/db/<databaseName>/tx/<transactionID>/query/v2/commit
+----
+
+Committing a transaction results in its changes becoming permanent on the database.
+
+The request can optionally include a final `statement` object, which will be executed before closing the transaction.
+
+====
+[discrete]
+=== Example request
+
+[source, headers]
+----
+POST http://localhost:7474/db/neo4j/tx/lyU/commit
+Accept: application/json
+Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
+Content-Type: application/json
+neo4j-cluster-affinity: MTAuOC41Ljc6MTc0NzQ=
+----
+
+[discrete]
+=== Example response
+
+[source, headers]
+----
+202: Accepted
+Content-Type: application/json
+----
+====
+
+
+== Rollback a transaction
+
+To rollback a transaction, submit a `DELETE` request to the following endpoint:
+
+----
+http://localhost:7474/db/neo4j/tx/query/v2/<transactionID>
+----
+
+When a transaction is rolled back, the status of the database gets restored to before the transaction was opened.
+All the changes your queries would make to the database are thus discarded.
+
+====
+[discrete]
+=== Example request
+
+[source, headers]
+----
+DELETE http://localhost:7474/db/neo4j/query/v2/tx/lyU
+Accept: application/json
+Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
+neo4j-cluster-affinity: MTAuOC41Ljc6MTc0NzQ=
+----
+
+[discrete]
+=== Example response
+
+[source, headers]
+----
+202: Accepted
+Content-Type: application/json
+----
+====
+
+
+== Authentication failure on open transactions
+
+An authentication error (`Neo.ClientError.Security.Unauthorized`) in a request to an open transaction results in a rollback.
+The transaction remains open though.
+
+
+ifndef::backend-pdf[]
+[discrete.glossary]
+== Glossary
+
+include::{partials}/glossary.adoc[]
+endif::[]

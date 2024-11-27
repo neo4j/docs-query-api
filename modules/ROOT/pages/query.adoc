@@ -12,9 +12,7 @@ http://<host>:<port>/db/<databaseName>/query/v2
 
 The server wraps the submitted Cypher query in a (implicit) <<transaction>> for you.
 This means that in case any part of the query fails, the database will be reverted back to its status before any part of the query was executed.
-
-It's currently not possible to control the lifecycle of transactions through the Query API.
-If you need that flexibility, checkout the link:https://neo4j.com/docs/http-api/current[HTTP API] and  link:https://neo4j.com/docs/create-applications/[language libraries].
+To run an explicit transaction, see xref:transactions.adoc[].
 
 [TIP]
 Each request must include an `Authorization` header, see xref:authentication-authorization.adoc[] for more information.
@@ -82,7 +80,7 @@ The only exception is authentication errors, which result in a `401` status code
 <3> Query result values, in the same order as `fields`. +
 For more information on what format the values may take, see xref:result-formats.adoc[].
 <4> Entity ID within the database.
-`elementId` should be used with care, as no guarantees are given about the mapping between ID values and elements outside the scope of a single transaction.
+Use `elementId` with care, as no guarantees are given about the mapping between ID values and elements outside the scope of a single transaction.
 For example, using an `elementId` to `MATCH` an element across different transactions is risky.
 <5> Bookmarks are used to enforce an ordering to transactions. +
 For more information, see xref:bookmarks.adoc[].
