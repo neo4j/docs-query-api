@@ -192,7 +192,7 @@ Content-Type: application/json
 == Transaction expiration and keep alive
 
 Transactions expire automatically after a period of inactivity, after which they are rolled back.
-By default the timeout is 60 seconds, but you can set a different value in the server configuration (link:{neo4j-docs-base-uri}/operations-manual/current/configuration/configuration-settings#config_server_queryapi_transaction_idle_timeout[`server.queryapi.transaction_idle_timeout`]).
+By default the timeout is 60 seconds, but you can set a different value in the server configuration (link:{neo4j-docs-base-uri}/operations-manual/current/configuration/configuration-settings#config_server.queryapi.transaction_idle_timeout[`server.queryapi.transaction_idle_timeout`]).
 
 The transaction expiration time is reported in each response, under the `transaction` key.
 To keep a transaction alive without submitting new queries, you can submit an empty statement to the transaction URI.
