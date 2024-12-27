@@ -219,7 +219,7 @@ This usually happens after an error is raised.
 To commit a transaction, send a `POST` request to the following endpoint:
 
 ----
-http://<host>:<port>/db/<databaseName>/tx/<transactionID>/query/v2/commit
+http://<host>:<port>/db/<databaseName>/query/v2/tx/<transactionID>/commit
 ----
 
 Committing a transaction results in its changes becoming permanent on the database.
