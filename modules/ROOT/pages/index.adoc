@@ -5,11 +5,12 @@
 = Introduction
 
 [NOTE]
-The Query API is enabled by default. 
+The Query API is enabled by default.
 It was however disabled by default on self-managed instances versions < 5.25.
 To enable it on those deployments, add `QUERY_API_ENDPOINTS` to the configuration setting link:https://neo4j.com/docs/operations-manual/current/configuration/configuration-settings/#config_server.http_enabled_modules[`server.http_enabled_modules`].
 
 The Query API allows to execute Cypher statements against a Neo4j server through HTTP requests.
+This API supersedes the deprecated link:https://neo4j.com/docs/http-api/current/[HTTP API].
 
 The main use case of the API is for developing client applications in languages for which there is no supported library.
 If there exists an official library (driver) for the language you are using, consider using that instead -- see link:{neo4j-docs-base-uri}/create-applications/[Create applications].
