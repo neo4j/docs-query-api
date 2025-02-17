@@ -17,7 +17,7 @@ All responses include a `bookmarks` field containing a list of encoded bookmarks
     "fields": [
       "n"
     ],
-    "values": [
+    "values": [[
       {
         "elementId": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:0",
         "labels": [
@@ -28,7 +28,7 @@ All responses include a `bookmarks` field containing a list of encoded bookmarks
           "age": 42
         }
       }
-    ]
+    ]]
   },
   "bookmarks": [
     "FB:kcwQ/wTfJf8rS1WY+GiIKXsCXgmQ"

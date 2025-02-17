@@ -39,7 +39,7 @@ Content-Type: application/json
     "fields": [
       "n"
     ],
-    "values": [
+    "values": [[
       {
         "elementId": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:0",
         "labels": [
@@ -59,7 +59,7 @@ Content-Type: application/json
           "name": "Lucy"
         }
       }
-    ]
+    ]]
   },
   "bookmarks": [
     "FB:kcwQ/wTfJf8rS1WY+GiIKXsCXguQ"

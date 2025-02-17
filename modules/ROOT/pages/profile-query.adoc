@@ -43,9 +43,9 @@ Content-Type: application/json
     "fields": [
       "n.name"
     ],
-    "values": [
+    "values": [[
       "Alice"
-    ]
+    ]]
   },
   "profiledQueryPlan": {
     "dbHits": 0,

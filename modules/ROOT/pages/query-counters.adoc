@@ -41,9 +41,9 @@ Content-Type: application/json
     "fields": [
         "n.name"
     ],
-    "values": [
+    "values": [[
         "Peter"
-    ]
+    ]]
   },
   "counters": {
     "containsUpdates": true,

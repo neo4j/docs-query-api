@@ -72,7 +72,7 @@ neo4j-cluster-affinity: MTAuOC41Ljc6MTc0NzQ=  // <2>
     "fields": [  // <3>
       "alice"
     ],
-    "values": [  // <4>
+    "values": [[  // <4>
       {
         "elementId": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:0",  // <5>
         "labels": [
@@ -83,7 +83,7 @@ neo4j-cluster-affinity: MTAuOC41Ljc6MTc0NzQ=  // <2>
           "age": 42
         }
       }
-    ]
+    ]]
   },
   "bookmarks": [  // <6>
     "FB:kcwQ/wTfJf8rS1WY+GiIKXsCXgmQ"
@@ -100,7 +100,7 @@ The only exception is authentication errors, which result in a `401` status code
 <.> The header `neo4j-cluster-affinity` identifies the cluster member handling the transaction.
 It must be included as a header to all subsequent requests, including commit/rollback requests.
 <.> Query result keys.
-<.> Query result values, in the same order as `fields`. +
+<.> Query result values for each result returned by the query. Each individual result values are in the same order as `fields`. +
 For more information on what format the values may take, see xref:result-formats.adoc[].
 <.> Entity ID within the database.
 Use `elementId` with care, as no guarantees are given about the mapping between ID values and elements outside the scope of a single transaction.
@@ -164,7 +164,7 @@ Content-Type: application/json
     "fields": [
       "bob"
     ],
-    "values": [
+    "values": [[
       {
         "elementId": "4:ff04df25-ff2b-4b55-98f8-6888297b034e:0",
         "labels": [
@@ -175,7 +175,7 @@ Content-Type: application/json
           "age": 43
         }
       }
-    ]
+    ]]
   },
   "bookmarks": [
     "FB:kcwQ/wTfJf8rS1WY+GiIKXsCXgmQ"
