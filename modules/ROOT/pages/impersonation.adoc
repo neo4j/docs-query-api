@@ -40,9 +40,11 @@ Content-Type: application/json
     "fields": [
       "n.name"
     ],
-    "values": [[
-      "Alice"
-    ]]
+    "values": [
+      [
+        "Alice"
+      ]
+    ]
   },
   "bookmarks": [
     "FB:kcwQ/wTfJf8rS1WY+GiIKXsCXgyQ"

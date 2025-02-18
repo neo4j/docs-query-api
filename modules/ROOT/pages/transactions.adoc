@@ -72,18 +72,20 @@ neo4j-cluster-affinity: MTAuOC41Ljc6MTc0NzQ=  // <2>
     "fields": [  // <3>
       "alice"
     ],
-    "values": [[  // <4>
-      {
-        "elementId": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:0",  // <5>
-        "labels": [
-          "Person"
-        ],
-        "properties": {
-          "name": "Alice",
-          "age": 42
+    "values": [  // <4>
+      [
+        {
+          "elementId": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:0",  // <5>
+          "labels": [
+            "Person"
+          ],
+          "properties": {
+            "name": "Alice",
+            "age": 42
+          }
         }
-      }
-    ]]
+      ]
+    ]
   },
   "bookmarks": [  // <6>
     "FB:kcwQ/wTfJf8rS1WY+GiIKXsCXgmQ"
@@ -164,18 +166,20 @@ Content-Type: application/json
     "fields": [
       "bob"
     ],
-    "values": [[
-      {
-        "elementId": "4:ff04df25-ff2b-4b55-98f8-6888297b034e:0",
-        "labels": [
-          "Person"
-        ],
-        "properties": {
-          "name": "Bob",
-          "age": 43
+    "values": [
+      [
+        {
+          "elementId": "4:ff04df25-ff2b-4b55-98f8-6888297b034e:0",
+          "labels": [
+            "Person"
+          ],
+          "properties": {
+            "name": "Bob",
+            "age": 43
+          }
         }
-      }
-    ]]
+      ]
+    ]
   },
   "bookmarks": [
     "FB:kcwQ/wTfJf8rS1WY+GiIKXsCXgmQ"

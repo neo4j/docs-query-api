@@ -43,9 +43,11 @@ Content-Type: application/json
     "fields": [
       "n.name"
     ],
-    "values": [[
-      "Alice"
-    ]]
+    "values": [
+      [
+        "Alice"
+      ]
+    ]
   },
   "profiledQueryPlan": {
     "dbHits": 0,
@@ -75,8 +77,8 @@ Content-Type: application/json
       "Rows": 1
     },
     "identifiers": [
-        "n",
-        "`n.name`"
+      "n",
+      "`n.name`"
     ],
     "children": [
       {

@@ -39,11 +39,13 @@ Content-Type: application/json
 {
   "data": {
     "fields": [
-        "n.name"
+      "n.name"
     ],
-    "values": [[
+    "values": [
+      [
         "Peter"
-    ]]
+      ]
+    ]
   },
   "counters": {
     "containsUpdates": true,

@@ -39,27 +39,29 @@ Content-Type: application/json
     "fields": [
       "n"
     ],
-    "values": [[
-      {
-        "elementId": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:0",
-        "labels": [
-          "Person"
-        ],
-        "properties": {
-          "name": "Alice",
-          "age": 42
+    "values": [
+      [
+        {
+          "elementId": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:0",
+          "labels": [
+            "Person"
+          ],
+          "properties": {
+            "name": "Alice",
+            "age": 42
+          }
+        },
+        {
+          "elementId": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:1",
+          "labels": [
+            "Person"
+          ],
+          "properties": {
+            "name": "Lucy"
+          }
         }
-      },
-      {
-        "elementId": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:1",
-        "labels": [
-          "Person"
-        ],
-        "properties": {
-          "name": "Lucy"
-        }
-      }
-    ]]
+      ]
+    ]
   },
   "bookmarks": [
     "FB:kcwQ/wTfJf8rS1WY+GiIKXsCXguQ"

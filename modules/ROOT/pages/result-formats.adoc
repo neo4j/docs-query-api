@@ -65,18 +65,20 @@ Content-Type: application/json
       "person",
       "name"
     ],
-    "values": [[
-      {
-        "elementId": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:2",
-        "labels": [
-          "Person"
-        ],
-        "properties": {
-          "name": "Phil"
-        }
-      },
-      "Phil"
-    ]]
+    "values": [
+      [
+        {
+          "elementId": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:2",
+          "labels": [
+            "Person"
+          ],
+          "properties": {
+            "name": "Phil"
+          }
+        },
+        "Phil"
+      ]
+    ]
   },
   "bookmarks": [
     "FB:kcwQ/wTfJf8rS1WY+GiIKXsCXg6Q"
@@ -330,27 +332,29 @@ Content-Type: application/json
       "person",
       "name"
     ],
-    "values": [[
-      {
-        "$type": "Node",
-        "_value": {
-          "_element_id": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:2",
-          "_labels": [
-            "Person"
-          ],
-          "_properties": {
-            "name": {
-              "$type": "String",
-              "_value": "Phil"
+    "values": [
+      [
+        {
+          "$type": "Node",
+          "_value": {
+            "_element_id": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:2",
+            "_labels": [
+              "Person"
+            ],
+            "_properties": {
+              "name": {
+                "$type": "String",
+                "_value": "Phil"
+              }
             }
           }
+        },
+        {
+          "$type": "String",
+          "_value": "Phil"
         }
-      },
-      {
-        "$type": "String",
-        "_value": "Phil"
-      }
-    ]]
+      ]
+    ]
   },
   "bookmarks": [
     "FB:kcwQ/wTfJf8rS1WY+GiIKXsCXg6Q"
