@@ -44,7 +44,9 @@ Content-Type: application/json
       "n.name"
     ],
     "values": [
-      "Alice"
+      [
+        "Alice"
+      ]
     ]
   },
   "profiledQueryPlan": {
@@ -75,8 +77,8 @@ Content-Type: application/json
       "Rows": 1
     },
     "identifiers": [
-        "n",
-        "`n.name`"
+      "n",
+      "`n.name`"
     ],
     "children": [
       {

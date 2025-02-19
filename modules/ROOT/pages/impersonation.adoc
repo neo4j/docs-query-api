@@ -41,7 +41,9 @@ Content-Type: application/json
       "n.name"
     ],
     "values": [
-      "Alice"
+      [
+        "Alice"
+      ]
     ]
   },
   "bookmarks": [

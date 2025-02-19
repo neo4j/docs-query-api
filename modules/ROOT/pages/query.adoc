@@ -56,16 +56,18 @@ Content-Type: application/json
       "alice"
     ],
     "values": [  // <3>
-      {
-        "elementId": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:0",  // <4>
-        "labels": [
-          "Person"
-        ],
-        "properties": {
-          "name": "Alice",
-          "age": 42
+      [
+        {
+          "elementId": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:0",  // <4>
+          "labels": [
+            "Person"
+          ],
+          "properties": {
+            "name": "Alice",
+            "age": 42
+          }
         }
-      }
+      ]
     ]
   },
   "bookmarks": [  // <5>
@@ -77,7 +79,7 @@ Content-Type: application/json
 <1> Because the server does not know whether the request will be successful or not when it sends the HTTP status code, all API requests return a `202` status code, regardless of whether the statements were successfully executed.
 The only exception is authentication errors, which result in a `401` status code.
 <2> Query result keys.
-<3> Query result values, in the same order as `fields`. +
+<3> Query result values for each result returned by the query. Each individual result values are in the same order as `fields`. +
 For more information on what format the values may take, see xref:result-formats.adoc[].
 <4> Entity ID within the database.
 Use `elementId` with care, as no guarantees are given about the mapping between ID values and elements outside the scope of a single transaction.

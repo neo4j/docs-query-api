@@ -18,16 +18,18 @@ All responses include a `bookmarks` field containing a list of encoded bookmarks
       "n"
     ],
     "values": [
-      {
-        "elementId": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:0",
-        "labels": [
-          "Person"
-        ],
-        "properties": {
-          "name": "Alice",
-          "age": 42
+      [
+        {
+          "elementId": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:0",
+          "labels": [
+            "Person"
+          ],
+          "properties": {
+            "name": "Alice",
+            "age": 42
+          }
         }
-      }
+      ]
     ]
   },
   "bookmarks": [

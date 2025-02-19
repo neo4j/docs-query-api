@@ -17,14 +17,14 @@ To request this format, set `Accept: application/json` in the request headers (o
 ----
 {
   "data": {
-    "fields": [ field1, field2, ... ],  // <1>
-    "values": [ entity1, entity2, ... ]  // <2>
+    "fields": [   field1, field2, ... ],  // <1>
+    "values": [ [ entity1, entity2, ... ] ]  // <2>
   }
 }
 ----
 
 <1> Query fields, i.e. keys for the returned objects
-<2> Query result (the inner structure of each element depends on the object type)
+<2> Query results. The outer array represents a single result (or row) where the inner array contains the individual values for that result (the inner structure of each element depends on the object type).
 
 .Return a node and a property
 ====
@@ -66,16 +66,18 @@ Content-Type: application/json
       "name"
     ],
     "values": [
-      {
-        "elementId": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:2",
-        "labels": [
-          "Person"
-        ],
-        "properties": {
-          "name": "Phil"
-        }
-      },
-      "Phil"
+      [
+        {
+          "elementId": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:2",
+          "labels": [
+            "Person"
+          ],
+          "properties": {
+            "name": "Phil"
+          }
+        },
+        "Phil"
+      ]
     ]
   },
   "bookmarks": [
@@ -331,25 +333,27 @@ Content-Type: application/json
       "name"
     ],
     "values": [
-      {
-        "$type": "Node",
-        "_value": {
-          "_element_id": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:2",
-          "_labels": [
-            "Person"
-          ],
-          "_properties": {
-            "name": {
-              "$type": "String",
-              "_value": "Phil"
+      [
+        {
+          "$type": "Node",
+          "_value": {
+            "_element_id": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:2",
+            "_labels": [
+              "Person"
+            ],
+            "_properties": {
+              "name": {
+                "$type": "String",
+                "_value": "Phil"
+              }
             }
           }
+        },
+        {
+          "$type": "String",
+          "_value": "Phil"
         }
-      },
-      {
-        "$type": "String",
-        "_value": "Phil"
-      }
+      ]
     ]
   },
   "bookmarks": [
