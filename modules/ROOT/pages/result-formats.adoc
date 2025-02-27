@@ -505,11 +505,11 @@ This section details how link:{neo4j-docs-base-uri}/cypher-manual/current/values
 ----
 
 | ZONED DATETIME
-| ZonedDateTime
+| OffsetDateTime
 | [source, JSON]
 ----
 {
-  "$type": "ZonedDateTime",
+  "$type": "OffsetDateTime",
   "_value": "2015-11-21T21:40:32.142Z[Antarctica/Troll]"
 }
 ----
