@@ -22,6 +22,11 @@ For more information, see xref:authentication-authorization.adoc[].
 Possible values are `application/json` and `application/vnd.neo4j.query`. +
 For more information, see xref:result-formats.adoc[].
 
+|neo4j-cluster-affinity
+|The cluster member handling the transaction, as received as response header by previous transaction requests.
+It must be included with all requests working with a specific transaction.
+For more information, see xref:transactions.adoc[].
+
 |===
 
 == Response headers
@@ -34,5 +39,10 @@ For more information, see xref:result-formats.adoc[].
 |The format of the response body (matches the `Accept` request header). +
 Possible values are `application/json` and `application/vnd.neo4j.query`. +
 For more information, see xref:result-formats.adoc[].
+
+|neo4j-cluster-affinity
+|The cluster member handling the transaction.
+It must be included as a header to all subsequent requests, including commit/rollback requests.
+For more information, see xref:transactions.adoc[].
 
 |===
