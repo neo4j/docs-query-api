@@ -132,7 +132,7 @@ The request must include the header `neo4j-cluster-affinity`, replaying the valu
 
 [source, headers]
 ----
-POST http://localhost:7474/db/neo4j/tx/lyU
+POST http://localhost:7474/db/neo4j/query/v2/tx/lyU
 Accept: application/json
 Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
 Content-Type: application/json
@@ -236,7 +236,7 @@ The request can optionally include a final `statement` object, which will be exe
 
 [source, headers]
 ----
-POST http://localhost:7474/db/neo4j/tx/lyU/commit
+POST http://localhost:7474/db/neo4j/query/v2/tx/lyU/commit
 Accept: application/json
 Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
 Content-Type: application/json
