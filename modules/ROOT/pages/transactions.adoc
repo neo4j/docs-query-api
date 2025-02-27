@@ -157,6 +157,7 @@ neo4j-cluster-affinity: MTAuOC41Ljc6MTc0NzQ=
 ----
 202: Accepted
 Content-Type: application/json
+neo4j-cluster-affinity: MTAuOC41Ljc6MTc0NzQ=
 ----
 
 [source, JSON, role=nocollapse]
