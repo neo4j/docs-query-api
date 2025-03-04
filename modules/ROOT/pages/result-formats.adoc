@@ -1,7 +1,7 @@
-:description: Query API result format.
+:description: Neo4j Query API result formats, data types, and mapping to Cypher types.
 
 
-= Result formats
+= Result formats & Data types
 
 The Query API can return queried data in two formats: plain JSON, or a Neo4j-extended JSON with type information.
 
