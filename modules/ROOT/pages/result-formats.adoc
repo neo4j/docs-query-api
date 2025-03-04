@@ -545,22 +545,7 @@ This section details how link:{neo4j-docs-base-uri}/cypher-manual/current/values
 ----
 {
   "$type": "Point",
-  "_value": {
-    "coordinates": [
-      2.3,
-      4.5,
-      2.0
-    ],
-    "crs": {
-      "srid": 9157,
-      "name": "cartesian-3d",
-      "type": "link",
-      "properties": {
-        "href": "http://spatialreference.org/ref/sr-org/9157/ogcwkt/",
-        "type": "ogcwkt"
-      }
-    }
-  }
+  "_value": "SRID=7203;POINT (1.2 3.4)"
 }
 ----
 
