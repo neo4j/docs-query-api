@@ -6,6 +6,7 @@
 The Query API can return queried data in two formats: plain JSON, or a Neo4j-extended JSON with type information.
 
 
+[#plain-json]
 == Plain JSON
 
 The JSON format is the default one.
@@ -88,6 +89,8 @@ Content-Type: application/json
 
 ====
 
+
+[#plain-types]
 === Type mapping
 
 link:{neo4j-docs-base-uri}/cypher-manual/current/values-and-types/[Cypher types] are mapped to the closest JSON type, with the complex ones (temporal, spatial, binary) serialized to string.
@@ -251,6 +254,7 @@ The order of returned nodes and relationships is not representative of the direc
 |===
 
 
+[#typed-json]
 == JSON with type information
 
 Plain JSON does not provide information about the type of a returned value.
@@ -365,6 +369,7 @@ Content-Type: application/vnd.neo4j.query
 ====
 
 
+[#typed-json-types]
 === Type mapping
 
 This section details how link:{neo4j-docs-base-uri}/cypher-manual/current/values-and-types/[Cypher types] are labeled in the Query API.
