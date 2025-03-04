@@ -321,7 +321,7 @@ Content-Type: application/vnd.neo4j.query
 [source, headers]
 ----
 202: Accepted
-Content-Type: application/json
+Content-Type: application/vnd.neo4j.query
 ----
 
 [source, JSON]
