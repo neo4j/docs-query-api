@@ -3,11 +3,16 @@
 Use transactions to group together related queries which work together to achieve a single logical database operation.
 As Neo4j is <<ACID>> compliant, queries within a <<transaction>> will either be executed as a whole or not at all: you cannot get a part of the transaction succeed and another fail.
 
+[WARNING]
+Explicit transactions are only available on <<Aura>> and on single-instance self-managed servers.
+If you are running a self-managed cluster, you need to implement your own method so that requests belonging to the same transaction get routed to the same cluster member.
+
 [NOTE]
 Cypher queries with link:{neo4j-docs-base-uri}/cypher-manual/current/clauses/call-subquery/#subquery-call-in-transactions[`CALL {} IN TRANSACTIONS`] can not be executed in explicit transactions.
 Submit those queries with xref:query.adoc[implicit transactions] instead.
 
 
+[#open]
 == Create a transaction
 
 To open a new (explicit) transaction, submit a `POST` request to the following endpoint:
@@ -30,7 +35,7 @@ The body of the request may either:
 - be entirely empty.
 
 The two latter options are for avoiding the transaction from timing out. +
-The server will respond with the location of the new transaction.
+The server responds with the location of the new transaction.
 
 ====
 [discrete]
@@ -99,7 +104,7 @@ neo4j-cluster-affinity: MTAuOC41Ljc6MTc0NzQ=  // <2>
 
 <.> Because the server does not know whether the request will be successful or not when it sends the HTTP status code, all API requests return a `202` status code, regardless of whether the statements were successfully executed.
 The only exception is authentication errors, which result in a `401` status code.
-<.> The header `neo4j-cluster-affinity` identifies the cluster member handling the transaction.
+<.> The header `neo4j-cluster-affinity` is only returned from Aura instances, and identifies the cluster member handling the transaction.
 It must be included as a header to all subsequent requests, including commit/rollback requests.
 <.> Query result keys.
 <.> Query result values for each result returned by the query. Each individual result values are in the same order as `fields`. +
@@ -114,6 +119,7 @@ Use the ID for subsequent request URIs.
 ====
 
 
+[#queries]
 == Execute queries
 
 Once a transaction is open, you can submit queries to it by sending more `POST` requests to the following endpoint:
@@ -124,7 +130,7 @@ http://<host>:<port>/db/<databaseName>/query/v2/tx/<transactionID>
 
 You can find the transaction ID under the `transaction.id` key of your first request result.
 
-The request must include the header `neo4j-cluster-affinity`, replaying the value the server sent when the transaction was opened.
+If working with an Aura instance, the request must include the header `neo4j-cluster-affinity`, replaying the value the server sent when the transaction was opened.
 
 ====
 [discrete]
@@ -194,6 +200,7 @@ neo4j-cluster-affinity: MTAuOC41Ljc6MTc0NzQ=
 ====
 
 
+[#expiration]
 == Transaction expiration and keep alive
 
 Transactions expire automatically after a period of inactivity, after which they are rolled back.
@@ -216,9 +223,10 @@ Attempting to submit queries to an expired transaction results in an error:
 
 [TIP]
 If a response does not contain the `transaction` key, the corresponding transaction has been closed.
-This usually happens after an error is raised.
+This happens after most errors are raised.
 
 
+[#commit]
 == Commit a transaction
 
 To commit a transaction, send a `POST` request to the following endpoint:
@@ -229,7 +237,7 @@ http://<host>:<port>/db/<databaseName>/query/v2/tx/<transactionID>/commit
 
 Committing a transaction results in its changes becoming permanent on the database.
 
-The request can optionally include a final `statement` object, which will be executed before closing the transaction.
+The request can optionally include a final `statement` object, which gets executed before closing the transaction.
 
 ====
 [discrete]
@@ -256,6 +264,7 @@ neo4j-cluster-affinity: MTAuOC41Ljc6MTc0NzQ=
 ====
 
 
+[#rollback]
 == Rollback a transaction
 
 To rollback a transaction, submit a `DELETE` request to the following endpoint:
