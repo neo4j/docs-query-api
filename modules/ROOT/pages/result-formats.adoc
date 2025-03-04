@@ -174,7 +174,7 @@ true
 | string (WKT)
 | [source, JSON]
 ----
-"SRID=7203;POINT(1.2 3.4)"
+"SRID=7203;POINT (1.2 3.4)"
 ----
 
 | NODE
