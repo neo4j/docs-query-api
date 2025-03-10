@@ -32,7 +32,6 @@ For more information, see xref:transactions.adoc#_commit_a_transaction[Run trans
 |===
 
 
-[role=label--not-on-aura]
 [[discovery-api]]
 == Discovery API
 
