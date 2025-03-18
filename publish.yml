@@ -1,6 +1,6 @@
 site:
   title: Neo4j Query API
-  url: https://neo4j.com/docs/query-api/
+  url: https://neo4j.com/docs/
   start_page: query-api:ROOT:index.adoc
 
 content:
