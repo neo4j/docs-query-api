@@ -25,7 +25,7 @@ For more information, see xref:transactions.adoc[].
 A `DELETE` request results in a rollback. +
 For more information, see xref:transactions.adoc#_execute_queries[Run transactions -> Execute queries].
 
-|/db/<databaseName>/tx/query/v2/<transactionID>/commit
+|/db/<databaseName>/query/v2/tx/<transactionID>/commit
 |To commit an open transaction with ID `<transactionID>`. +
 For more information, see xref:transactions.adoc#_commit_a_transaction[Run transactions -> Commit a transaction].
 
