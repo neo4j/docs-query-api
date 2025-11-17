@@ -261,9 +261,8 @@ The order of returned nodes and relationships is not representative of the direc
 label:enterprise-edition[] label:new[Introduced in 2025.10]
 
 [NOTE]
-link:https://neo4j.com/docs/cypher-manual/current/values-and-types/vector/[`VECTOR`] values can only be retrieved from the database, but cannot be passed as parameters in plain json.
-To create vectors, use the link:https://neo4j.com/docs/cypher-manual/current/values-and-types/vector/#construct-vector-values[Cypher `vector` constructor].
-Or use the JSON with type information.
+link:https://neo4j.com/docs/cypher-manual/25/values-and-types/vector/[`VECTOR`] values can only be retrieved from the database, but cannot be passed as parameters in plain json.
+To create vectors, use the link:https://neo4j.com/docs/cypher-manual/25/values-and-types/vector/#construct-vector-values[Cypher `vector` constructor], or use the xref:typed-json[JSON with type information] format.
 |===
 
 
@@ -381,30 +380,6 @@ Content-Type: application/vnd.neo4j.query
 
 ====
 
-[#typed-json-version]
-=== Media-type versions
-label:new[Introduced in 2025.10]
-
-To ensure safe type evolution, the MIME type is versioned.  
-This allows new types to be added in a predictable and backward-compatible way.
-
-[#typed-json-version-1-1]
-==== `application/vnd.neo4j.query.v1.1`
-label:new[Introduced in 2025.11]
-
-** Add `Vector` type
-** Add `Unsupported` type
-
-[#typed-json-version-1-0]
-==== `application/vnd.neo4j.query.v1.0`
-label:new[Introduced in 2025.10]
-
-Nothing new added, alias for `application/vnd.neo4j.query`
-
-[#typed-json-version-0]
-==== `application/vnd.neo4j.query`
-
-Initial implementation of the Typed JSON format.
 
 [#typed-json-types]
 === Type mapping
@@ -700,16 +675,16 @@ The order of returned nodes and relationships is not representative of the direc
   "$type": "Vector",
   "_value": {
     "coordinatesType": "INT8",
-    "coordinates": ["1", "-5", "10"] 
+    "coordinates": ["1", "-5", "10"]
   }
 }
 ----
-label:enterprise-edition[] label:new[Introduced in 2025.11] label:new[Introduced in "application/vnd.neo4j.query.v1.1"]
+label:enterprise-edition[] label:new[Introduced in 2025.11]
 
 [NOTE]
-The `coordinatesType` field accepts the following values: `FLOAT64`, `FLOAT32`, `INT64`, `INT32`, `INT16` and `INT8`.
+Supported values for `coordinatesType` are: `FLOAT64`, `FLOAT32`, `INT64`, `INT32`, `INT16` and `INT8`.
 The `coordinates` field is an array containing the string representation of the coordinate values.
-The dimension of the `VECTOR` is implicitly defined by the length of the `coordinates` array.
+The dimension of the vector is implicitly defined by the length of the `coordinates` array.
 
 | UNSUPPORTED
 | Unsupported
@@ -720,6 +695,31 @@ The dimension of the `VECTOR` is implicitly defined by the length of the `coordi
   "_value": "Type TheUnsupportedType is not supported."
 }
 ----
-label:new[Introduced in 2025.11] label:new[Introduced in "application/vnd.neo4j.query.v1.1"]
+label:new[Introduced in 2025.11]
 
 |===
+
+
+[#typed-json-versions]
+=== Changelog
+
+
+[#typed-json-version-1-1]
+[role=label--new-2025.11]
+==== application/vnd.neo4j.query.v1.1
+
+** Introduce `Vector` type.
+** Introduce `Unsupported` type.
+
+
+[#typed-json-version-1-0]
+[role=label--new-2025.10]
+==== application/vnd.neo4j.query.v1.0
+
+Alias for `application/vnd.neo4j.query`.
+
+
+[#typed-json-version-0]
+==== application/vnd.neo4j.query
+
+Initial implementation of the typed JSON format.
