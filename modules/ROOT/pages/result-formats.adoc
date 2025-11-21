@@ -136,7 +136,7 @@ true
 "Hello World"
 ----
 
-| ByteArray
+| BYTE ARRAY
 | string (base64)
 | [source, JSON]
 ----
