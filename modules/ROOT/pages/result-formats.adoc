@@ -443,7 +443,7 @@ This section details how link:{neo4j-docs-base-uri}/cypher-manual/current/values
 }
 ----
 
-| ByteArray
+| BYTE ARRAY
 | Base64
 | [source, JSON]
 ----
