@@ -10,7 +10,7 @@ This page contains a full list of headers you may use to tweak the API behavior,
 
 |Accept
 |Desired format of the response body. +
-Possible values are `application/json` (default) and `application/vnd.neo4j.query`. +
+Possible values are `application/json`, `application/vnd.neo4j.query.v1.1`, and `application/vnd.neo4j.query.v1.0`. +
 For more information, see xref:result-formats.adoc[].
 
 |Authorization
@@ -19,7 +19,7 @@ For more information, see xref:authentication-authorization.adoc[].
 
 |Content-Type
 |The format of the request body. +
-Possible values are `application/json` and `application/vnd.neo4j.query`. +
+Possible values are `application/json`, `application/vnd.neo4j.query.v1.1`, and `application/vnd.neo4j.query.v1.0`. +
 For more information, see xref:result-formats.adoc[].
 
 |neo4j-cluster-affinity
@@ -38,7 +38,7 @@ For more information, see xref:transactions.adoc[].
 
 |Content-Type
 |The format of the response body (matches the `Accept` request header). +
-Possible values are `application/json` and `application/vnd.neo4j.query`. +
+Possible values are `application/json`, `application/vnd.neo4j.query.v1.1`, and `application/vnd.neo4j.query.v1.0`. +
 For more information, see xref:result-formats.adoc[].
 
 |neo4j-cluster-affinity
