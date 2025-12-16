@@ -1,14 +1,135 @@
 = Profile queries
 
-If a query is prepended with `EXPLAIN`, the server will return the _execution plan_ it would use to run it, but not actually execute it.
-On the other hand, if a query is prepended with `PROFILE`, the server will return the execution plan _and_ the corresponding query result.
+Profiling a query and analyzing its execution plan can help locating potential bottlenecks or performance improvements.
+For more information, see link:{neo4j-docs-base-uri}/cypher-manual/current/planning-and-tuning/[Cypher -> Execution plans and query tuning].
 
-The execution plan is valuable in analyzing a query and profiling its performance.
-For more information, see link:{neo4j-docs-base-uri}/cypher-manual/current/planning-and-tuning/[Execution plans and query tuning].
+
+== The `EXPLAIN` keyword
+
+If a query is prepended with `EXPLAIN`, the server returns the execution plan it would use to run it, but not actually execute it.
+The plan is available as a nested object of link:https://neo4j.com/docs/cypher-manual/current/planning-and-tuning/operators/[Cypher operators] under the key `queryPlan`.
 
 ====
 [discrete]
-=== Example PROFILE request
+=== Example request
+
+[source, headers]
+----
+POST http://localhost:7474/db/neo4j/query/v2
+Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
+Content-Type: application/json
+----
+
+[source, JSON]
+----
+{
+  "statement": "EXPLAIN MATCH (n:Person {name: $name}) RETURN n.name",
+  "parameters": {
+    "name": "Alice"
+  }
+}
+----
+
+[discrete]
+=== Example response
+
+[source, headers]
+----
+202: OK
+Content-Type: application/json
+----
+
+[source, JSON]
+----
+{
+  "data": {
+    "fields": [
+      "n.name"
+    ],
+    "values": []
+  },
+  "queryPlan": {
+    "operatorType": "ProduceResults@neo4j",
+    "arguments": {
+      "planner-impl": "IDP",
+      "string-representation": "Cypher 5\n\nPlanner COST\n\nRuntime PIPELINED\n\nRuntime version 2025.10\n\nBatch size 128\n\n+------------------+----+---------------------------+----------------+---------------------+\n| Operator         | Id | Details                   | Estimated Rows | Pipeline            |\n+------------------+----+---------------------------+----------------+---------------------+\n| +ProduceResults  |  0 | `n.name`                  |              1 |                     |\n| |                +----+---------------------------+----------------+                     |\n| +Projection      |  1 | cache[n.name] AS `n.name` |              1 |                     |\n| |                +----+---------------------------+----------------+                     |\n| +Filter          |  2 | cache[n.name] = $name     |              1 |                     |\n| |                +----+---------------------------+----------------+                     |\n| +NodeByLabelScan |  3 | n:Person                  |             10 | Fused in Pipeline 0 |\n+------------------+----+---------------------------+----------------+---------------------+\n\nTotal database accesses: ?\n",
+      "runtime": "PIPELINED",
+      "runtime-impl": "PIPELINED",
+      "version": "5",
+      "batch-size": 128,
+      "Details": "`n.name`",
+      "planner-version": "2025.10",
+      "PipelineInfo": "Fused in Pipeline 0",
+      "runtime-version": "2025.10",
+      "Id": 0,
+      "EstimatedRows": 0.5,
+      "planner": "COST"
+    },
+    "identifiers": [
+      "n",
+      "`n.name`"
+    ],
+    "children": [
+      {
+        "operatorType": "Projection@neo4j",
+        "arguments": {
+          "Details": "cache[n.name] AS `n.name`",
+          "Id": 1,
+          "EstimatedRows": 0.5,
+          "PipelineInfo": "Fused in Pipeline 0"
+        },
+        "identifiers": [
+          "n",
+          "`n.name`"
+        ],
+        "children": [
+          {
+            "operatorType": "Filter@neo4j",
+            "arguments": {
+              "Details": "cache[n.name] = $name",
+              "Id": 2,
+              "EstimatedRows": 0.5,
+              "PipelineInfo": "Fused in Pipeline 0"
+            },
+            "identifiers": [
+              "n"
+            ],
+            "children": [
+              {
+                "operatorType": "NodeByLabelScan@neo4j",
+                "arguments": {
+                  "Details": "n:Person",
+                  "Id": 3,
+                  "EstimatedRows": 10.0,
+                  "PipelineInfo": "Fused in Pipeline 0"
+                },
+                "identifiers": [
+                  "n"
+                ],
+                "children": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "bookmarks": [
+    "FB:kcwQC685m8YsRuyUSvMWiiQriwKQ"
+  ]
+}
+----
+====
+
+
+== The `PROFILE` keyword
+
+If a query is prepended with `PROFILE`, the server returns the execution plan _and_ the corresponding query result.
+The plan is available as a nested object of link:https://neo4j.com/docs/cypher-manual/current/planning-and-tuning/operators/[Cypher operators] under the key `profiledQueryPlan`.
+
+====
+[discrete]
+=== Example request
 
 [source, headers]
 ----
@@ -158,118 +279,6 @@ Content-Type: application/json
   },
   "bookmarks": [
     "FB:kcwQ/wTfJf8rS1WY+GiIKXsCXgyQ"
-  ]
-}
-----
-====
-
-====
-[discrete]
-=== Example EXPLAIN request
-
-[source, headers]
-----
-POST http://localhost:7474/db/neo4j/query/v2
-Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
-Content-Type: application/json
-----
-
-[source, JSON]
-----
-{
-  "statement": "EXPLAIN MATCH (n:Person {name: $name}) RETURN n.name",
-  "parameters": {
-    "name": "Alice"
-  }
-}
-----
-
-[discrete]
-=== Example response
-
-[source, headers]
-----
-202: OK
-Content-Type: application/json
-----
-
-[source, JSON]
-----
-{
-  "data": {
-    "fields": [
-      "n.name"
-    ],
-    "values": []
-  },
-  "queryPlan": {
-    "operatorType": "ProduceResults@neo4j",
-    "arguments": {
-      "planner-impl": "IDP",
-      "string-representation": "Cypher 5\n\nPlanner COST\n\nRuntime PIPELINED\n\nRuntime version 2025.10\n\nBatch size 128\n\n+------------------+----+---------------------------+----------------+---------------------+\n| Operator         | Id | Details                   | Estimated Rows | Pipeline            |\n+------------------+----+---------------------------+----------------+---------------------+\n| +ProduceResults  |  0 | `n.name`                  |              1 |                     |\n| |                +----+---------------------------+----------------+                     |\n| +Projection      |  1 | cache[n.name] AS `n.name` |              1 |                     |\n| |                +----+---------------------------+----------------+                     |\n| +Filter          |  2 | cache[n.name] = $name     |              1 |                     |\n| |                +----+---------------------------+----------------+                     |\n| +NodeByLabelScan |  3 | n:Person                  |             10 | Fused in Pipeline 0 |\n+------------------+----+---------------------------+----------------+---------------------+\n\nTotal database accesses: ?\n",
-      "runtime": "PIPELINED",
-      "runtime-impl": "PIPELINED",
-      "version": "5",
-      "batch-size": 128,
-      "Details": "`n.name`",
-      "planner-version": "2025.10",
-      "PipelineInfo": "Fused in Pipeline 0",
-      "runtime-version": "2025.10",
-      "Id": 0,
-      "EstimatedRows": 0.5,
-      "planner": "COST"
-    },
-    "identifiers": [
-      "n",
-      "`n.name`"
-    ],
-    "children": [
-      {
-        "operatorType": "Projection@neo4j",
-        "arguments": {
-          "Details": "cache[n.name] AS `n.name`",
-          "Id": 1,
-          "EstimatedRows": 0.5,
-          "PipelineInfo": "Fused in Pipeline 0"
-        },
-        "identifiers": [
-          "n",
-          "`n.name`"
-        ],
-        "children": [
-          {
-            "operatorType": "Filter@neo4j",
-            "arguments": {
-              "Details": "cache[n.name] = $name",
-              "Id": 2,
-              "EstimatedRows": 0.5,
-              "PipelineInfo": "Fused in Pipeline 0"
-            },
-            "identifiers": [
-              "n"
-            ],
-            "children": [
-              {
-                "operatorType": "NodeByLabelScan@neo4j",
-                "arguments": {
-                  "Details": "n:Person",
-                  "Id": 3,
-                  "EstimatedRows": 10.0,
-                  "PipelineInfo": "Fused in Pipeline 0"
-                },
-                "identifiers": [
-                  "n"
-                ],
-                "children": []
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  "bookmarks": [
-    "FB:kcwQC685m8YsRuyUSvMWiiQriwKQ"
   ]
 }
 ----
