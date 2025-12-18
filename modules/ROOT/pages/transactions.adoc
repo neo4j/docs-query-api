@@ -166,7 +166,7 @@ Content-Type: application/json
 neo4j-cluster-affinity: MTAuOC41Ljc6MTc0NzQ=
 ----
 
-[source, JSON, role=nocollapse]
+[source, JSON]
 ----
 {
   "data": {
@@ -260,6 +260,15 @@ neo4j-cluster-affinity: MTAuOC41Ljc6MTc0NzQ=
 202: Accepted
 Content-Type: application/json
 neo4j-cluster-affinity: MTAuOC41Ljc6MTc0NzQ=
+----
+
+[source, JSON]
+----
+{
+    "bookmarks": [
+        "FB:kcwQrwI41VhBRoiBLch+ikTikQKQ"
+    ]
+}
 ----
 ====
 
