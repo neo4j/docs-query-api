@@ -434,7 +434,12 @@ This section details how link:{neo4j-docs-base-uri}/cypher-manual/current/values
 ----
 
 [NOTE]
-To represent `Nan`, `Infinity` and `-Infinity`, the `_value` field contains the string values "NaN", "Infinity", and "-Infinity". "-NaN" is handled as `NaN` when used as parameter, but this value isn't produced the API.
+The values can be represented on the *decimal notation* or *scientific notation*.
+`Nan`, `Infinity` and `-Infinity` are represented "NaN", "Infinity", and "-Infinity".
+"-NaN" is handled as `NaN` when used as parameter, but this value isn't produced the API.
+[NOTE]
+When returning values, values with magnitude between `10⁻³` (inclusive) and `10⁷` (exclusive) will be represented using the *decimal notation*. 
+Other values will be represented using the *scientific notation*.
 
 | STRING
 | String
