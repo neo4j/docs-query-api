@@ -434,7 +434,7 @@ This section details how link:{neo4j-docs-base-uri}/cypher-manual/current/values
 ----
 
 [NOTE]
-To represent `Nan`, `Infinity` and `-Infinity`, the `_value` field contains the string values "NaN", "Infinity", and "-Infinity".
+To represent `Nan`, `Infinity` and `-Infinity`, the `_value` field contains the string values "NaN", "Infinity", and "-Infinity". "-NaN" is handled as `NaN` when used as parameter, but this value isn't produced the API.
 
 | STRING
 | String
