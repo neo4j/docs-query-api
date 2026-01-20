@@ -1,5 +1,6 @@
-[#typed-json]
-== JSON with type information
+:description: Neo4j Query API result formats, data types, and mapping to Cypher types.
+
+= Typed JSON
 
 Plain JSON does not provide information about the type of a returned value.
 For example, the two following requests result in the exact same response, even if in the first case the return value is a Cypher `STRING`, while in the second case it is a `ZONED DATETIME`.
@@ -114,7 +115,7 @@ Content-Type: application/vnd.neo4j.query.v1.1
 
 
 [#typed-json-types]
-=== Type mapping
+== Type mapping
 
 This section details how link:{neo4j-docs-base-uri}/cypher-manual/current/values-and-types/[Cypher types] are labeled in the Query API.
 

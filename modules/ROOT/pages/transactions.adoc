@@ -108,7 +108,7 @@ The only exception is authentication errors, which result in a `401` status code
 It must be included as a header to all subsequent requests, including commit/rollback requests.
 <.> Query result keys.
 <.> Query result values for each result returned by the query. Each individual result values are in the same order as `fields`. +
-For more information on what format the values may take, see xref:result-formats.adoc[].
+For more information on what format the values may take, see xref:plain-json.adoc[] and xref:typed-json.adoc[].
 <.> Entity ID within the database.
 Use `elementId` with care, as no guarantees are given about the mapping between ID values and elements outside the scope of a single transaction.
 For example, using an `elementId` to `MATCH` an element across different transactions is risky.

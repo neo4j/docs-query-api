@@ -1,5 +1,6 @@
-[#plain-json]
-== Plain JSON
+:description: Neo4j Query API result formats, data types, and mapping to Cypher types.
+
+= Plain JSON
 
 The JSON format is the default one.
 It returns plain JSON, with the query results embedded within the `data` object.
@@ -83,7 +84,7 @@ Content-Type: application/json
 
 
 [#plain-types]
-=== Type mapping
+== Type mapping
 
 link:{neo4j-docs-base-uri}/cypher-manual/current/values-and-types/[Cypher types] are mapped to the closest JSON type, with the complex ones (temporal, spatial, binary) serialized to string.
 
