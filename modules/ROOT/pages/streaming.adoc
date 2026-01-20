@@ -1,0 +1,203 @@
+= Streaming Results 
+
+The Query API can *streaming value as events over HTTP*.
+This allows clients to process data incrementally as it arrives.
+This approach improves memory efficiency and enables applications to handle larger datasets more effectively.
+
+== Specification
+
+The streaming capability introduces *two new media types* for all *Query API* endpoints:
+
+* For untyped JSON: `application/jsonl`
+* For typed JSON: the suffix `+jsonl` is added to indicate that the API delivers data in a streaming format.
+** For example, `application/vnd.neo4j.query.v1.1+jsonl`
+
+This media formats are only accepted as response formats.
+Those can't be used as the request content type.
+
+Each streamed response consists of a sequence of *events*, each represented as a JSON object with the following structure:
+
+[source,json]
+----
+{
+    "$event": "Header | Record | Summary | Error",
+    "_body": { /* event-specific payload */ }
+}
+----
+
+[NOTE]
+For clarity, the JSON objects will be represented formatted with line breaks.
+In reality, each events will be represented as a single line.
+
+* `$event` — Identifies the type of event. Possible values are:
+** `Header`
+** `Record`
+** `Summary`
+** `Error`
+* `_body` — Contains the event-specific body. The structure of this field varies depending on the event type.
+
+The header `Transfer-Encoding: chunked` is used *HTTP/1.1* for transferring data in chunks. 
+*HTTP/2* connections don't need this header.
+
+=== Event Types
+
+Each event type has a distinct purpose and payload format. The following sections describe the structure and semantics of each event. 
+
+==== Header Event
+
+The *Header* event is sent first in the stream. It provides metadata about the query result, such as the names and types of the returned fields. Information about the created transaction might also be present. 
+
+[source,json]
+----
+{
+    "$event": "Header",
+  	"_body": { 
+		"fields": ["name", "age"]
+  	}
+}
+----
+
+*Fields*:
+
+* *fields (optional)* — An array of column names included in each subsequent `Record` event. This is not present when creating transactions without running a query.
+
+==== Record Event
+
+The *Record* event carries a single row of query data. One `Record` event is emitted for each result row.
+
+[source,json]
+----
+{
+    "$event": "Record",
+    "_body": ["Antonio", 39]
+}
+----
+
+Typed JSON example:
+
+[source,json]
+----
+{
+    "$event": "Record",
+    "_body": [{ "$type": "String", "_value": "Antonio" }, { "$type": "Integer",  "_value": "39" }]
+}
+----
+
+*Fields*:
+
+* *_body* — An array containing the field values for the current record. The order matches the `fields` array defined in the `Header` event. The format of which the value will be present depends on the format choosed, typed or untyped.
+
+==== Summary Event
+
+The *Summary* event marks the end of the stream and provides metadata about the query execution.
+
+[source,json]
+----
+{
+    "$event": "Summary",
+    "_body": {
+        "bookmarks": ["FB:kcwQ/wTfJf8rS1WY+GiIKXsCXgmQ"],
+        "transaction": {
+            "id": "lyU",
+            "expires": "2024-10-22T15:48:29Z"
+        },
+        "notifications": [ /* notifications structure */ ],"counters": { /* counters structure */},
+        "queryPlan": { /* query plan structure */ },
+        "profiledQueryPlan": /* profiled query plan structure */		
+    }
+}
+----
+
+*Fields*:
+
+* *bookmarks (optional)* — A list of database bookmarks returned by the transaction. Clients can use these to maintain causal consistency between queries. Present when the response represents a committed transaction.
+* *transaction (optional)* — An object with the transaction information. This is returned when an explicit transaction is created when the endpoint is called.
+* *notifications (optional)* — Contains warnings or informational messages generated during query execution. Present when notifications are emitted for the query result. See, xref:query.adoc#_server_notifications[query notifications]. 
+* *counters (optional)* — Provides statistics about the changes performed by the query (for example, nodes created, relationships deleted, properties set). Present when requested for the query execution. See, link:query-counters.adoc[query counters docs].
+* *queryPlan (optional)* — Describes the logical query plan, if available. Useful for debugging and optimization. Presented when requested for the query execution. See, link:profile-query.adoc[profile query].
+* *profiledQueryPlan (optional)* — Includes detailed execution metrics if the query was run with profiling enabled. See, link:profile-query.adoc[profile query].
+
+==== Error Event
+
+The *Error* event indicates that an error occurred during query execution or streaming.
+
+[source,json]
+----
+{
+    "$event": "Error", 
+    "_body": [{
+        "code": "Neo.ClientError.Statement.SyntaxError"
+        "message": "Invalid input 'RETURN'"
+    }]
+}
+----
+
+*Array containing objects with following fields*:
+
+* *code* — A string representing the Neo4j error code.
+* *message* — A human-readable error description.
+
+=== Message Sequencing
+
+The Query API streaming response consists of a *sequence of JSON events* delivered in *JSON Lines format*. 
+Each event represents a specific phase in the query execution lifecycle.
+
+Events are emitted in the following order:
+
+1. `Header` — Sent first. Defines the result structure and field names.
+2. `Record` — zero or more events, each containing a single row of result data.
+3. `Summary` — Sent once, after all records are streamed. Contains execution metadata.
+4. `Error` — May appear at any point in the stream if an error occurs. When an Error event is emitted, no further events are sent.
+
+==== Successful Example
+
+*Sequencing*
+
+[source,]
+----
+Header
+Record
+Record
+Record
+Summary
+----
+
+As *JSONL*:
+
+[source,jsonl]
+----
+{"$event":"Header","_body":{"fields":["name","age"]}}
+{"$event":"Record","_body": ["Alice",32]}
+{"$event":"Record","_body": ["Bob",29]}
+{"$event":"Summary","_body":{"bookmarks":["FB:kcwQ/wTfJf8rS1WY+GiIKXsCXgmQ"]}}
+----
+
+==== Failure Example
+
+*Sequencing*
+[source,]
+----
+Header
+Error
+----
+
+As *JSONL*:
+
+[source,jsonl]
+----
+{"$event":"Header","_body":{"fields":["name","age"]}}
+{"$event":"Error","_body":[{"code":"Neo.ClientError.Statement.SyntaxError","message":"Invalid input 'RETURN'"}]} 
+----
+
+In this case, the stream is terminated immediately after the `Error` event.
+
+=== Client Responsibilities
+
+* *Sequential Processing*:
+** Clients must consume events in the order they are received.
+* *Error Handling*:
+** If an `Error` event is encountered, clients should stop processing the stream and handle the error accordingly.
+* *Completion Detection*:
+** The stream is complete once a `Summary` or `Error` event is received.
+* *Partial Data Handling*:
+** Since data arrives incrementally, clients should not assume that all `Record` events are available before processing.
