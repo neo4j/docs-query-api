@@ -1,0 +1,23 @@
+:description: Neo4j Query API changelogs related to result formats, data types, and mapping to Cypher types
+[#typed-json-versions]
+= Changelog
+
+[#typed-json-version-1-1]
+[role=label--new-2025.11]
+== application/vnd.neo4j.query.v1.1
+
+- Introduce `Vector` type.
+- Introduce `Unsupported` type.
+
+
+[#typed-json-version-1-0]
+[role=label--new-2025.10]
+== application/vnd.neo4j.query.v1.0
+
+Alias for `application/vnd.neo4j.query`.
+
+
+[#typed-json-version-0]
+== application/vnd.neo4j.query
+
+Initial implementation of the typed JSON format.

@@ -12,3 +12,4 @@
 * xref:endpoints.adoc[]
 * xref:headers.adoc[]
 * xref:result-formats.adoc[]
+* xref:changelog.adoc[]
