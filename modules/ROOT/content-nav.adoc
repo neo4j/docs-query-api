@@ -12,4 +12,7 @@
 * **Reference**
 * xref:endpoints.adoc[]
 * xref:headers.adoc[]
-* xref:result-formats.adoc[]
+* Result formats & Data types
+** xref:plain-json.adoc[]
+** xref:typed-json.adoc[]
+* xref:changelog.adoc[]

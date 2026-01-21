@@ -1,0 +1,268 @@
+:description: Plain JSON is the default result format. It returns results as JSON, with the query results embedded within the `data` object.
+
+
+= Plain JSON
+
+Plain JSON is the default result format.
+It returns results as JSON, with the query results embedded within the `data` object.
+
+To request this format, set `Accept: application/json` in the request headers (or omit it entirely, as it is the default if no `Accept` header is provided).
+
+
+[[output-prototype]]
+== JSON output format prototype
+
+[source, JSON]
+----
+{
+  "data": {
+    "fields": [   field1, field2, ... ],  // <1>
+    "values": [ [ entity1, entity2, ... ] ]  // <2>
+  }
+}
+----
+
+<1> Query fields, i.e. keys for the returned objects
+<2> Query results. The outer array represents a single result (or row) where the inner array contains the individual values for that result (the inner structure of each element depends on the object type).
+
+
+[[examples]]
+== Examples
+
+.Return a node and a property
+====
+[discrete]
+=== Example request
+
+[source, headers]
+----
+POST http://localhost:7474/db/neo4j/query/v2
+Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
+Content-Type: application/json
+----
+
+[source, JSON]
+----
+{
+  "statement": "MERGE (p:Person {name: $name}) RETURN p AS person, p.name AS name",
+  "parameters": {
+    "name": "Phil"
+  }
+}
+----
+
+[discrete]
+=== Example response
+
+[source, headers]
+----
+202: Accepted
+Content-Type: application/json
+----
+
+[source, JSON]
+----
+{
+  "data": {
+    "fields": [
+      "person",
+      "name"
+    ],
+    "values": [
+      [
+        {
+          "elementId": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:2",
+          "labels": [
+            "Person"
+          ],
+          "properties": {
+            "name": "Phil"
+          }
+        },
+        "Phil"
+      ]
+    ]
+  },
+  "bookmarks": [
+    "FB:kcwQ/wTfJf8rS1WY+GiIKXsCXg6Q"
+  ]
+}
+----
+
+====
+
+
+[#plain-types]
+== Type mapping
+
+link:{neo4j-docs-base-uri}/cypher-manual/current/values-and-types/[Cypher types] are mapped to the closest JSON type, with the complex ones (temporal, spatial, binary) serialized to string.
+
+[options="header", cols=".^1m,.^1m,3a"]
+|===
+| Cypher type
+| Query API type
+| Example
+
+| NULL
+| null
+| [source, JSON]
+----
+null
+----
+
+| BOOLEAN
+| boolean
+| [source, JSON]
+----
+true
+----
+
+| INTEGER
+| number
+| [source, JSON]
+----
+123
+----
+
+| FLOAT
+| number
+| [source, JSON]
+----
+4.56
+----
+
+| STRING
+| string
+| [source, JSON]
+----
+"Hello World"
+----
+
+| BYTE ARRAY
+| string (base64)
+| [source, JSON]
+----
+"A2+/"
+----
+
+| LIST
+| array
+| [source, JSON]
+----
+[123, 456]
+----
+
+| MAP
+| object
+| [source, JSON]
+----
+{
+  "fieldA": "A value",
+  "fieldB": "Another value"
+}
+----
+
+| Temporal +
+(DATE, ZONED TIME, LOCAL TIME, ZONED DATETIME, LOCAL DATETIME, DURATION)
+| string (ISO-8601)
+| [source, JSON]
+----
+"2015-03-26"
+"12:50:35.556+01:00"
+"12:50:35.556"
+"2015-11-21T21:40:32.142Z[Antarctica/Troll]"
+"2015-07-04T19:32:24"
+"P14DT16H12M"
+----
+
+| POINT
+| string (WKT)
+| [source, JSON]
+----
+"SRID=7203;POINT (1.2 3.4)"
+----
+
+| NODE
+| object
+| [source, JSON]
+----
+{
+  "elementId": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:0",
+  "labels": [
+    "Person"
+  ],
+  "properties": {
+    "name": "Alice",
+    "age": 42
+  }
+}
+----
+
+| RELATIONSHIP
+| object
+| [source, JSON]
+----
+{
+  "elementId": "5:ff04df25-ff2b-4b55-98f8-6888297b025e:2",
+  "startNodeElementId": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:0",
+  "endNodeElementId": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:2",
+  "type": "LIKES",
+  "properties": {
+    "since": "forever!"
+  }
+}
+----
+
+| PATH
+| object
+| [source, JSON]
+----
+[
+  {
+    "elementId": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:0",
+    "labels": [
+      "Person"
+    ],
+    "properties": {
+      "name": "Alice",
+      "age": 42
+    }
+  },
+  {
+    "elementId": "5:ff04df25-ff2b-4b55-98f8-6888297b025e:2",
+    "startNodeElementId": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:0",
+    "endNodeElementId": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:2",
+    "type": "LIKES",
+    "properties": {
+      "since": "forever!"
+    }
+  },
+  {
+    "elementId": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:2",
+    "labels": [
+      "Person"
+    ],
+    "properties": {
+      "name": "Phil"
+    }
+  }
+]
+----
+
+[NOTE]
+The direction of the relationship in a path is only encoded in the start and end node element IDs.
+The order of returned nodes and relationships is not representative of the direction of relationships.
+
+| VECTOR
+| array
+| [source, JSON]
+----
+[123, 456]
+----
+
+label:enterprise-edition[] label:new[Introduced in 2025.10]
+
+[NOTE]
+link:https://neo4j.com/docs/cypher-manual/current/values-and-types/vector/[`VECTOR`] values can only be retrieved from the database, but cannot be passed as parameters in Plain JSON.
+To create vectors, use the link:https://neo4j.com/docs/cypher-manual/current/values-and-types/vector/#construct-vector-values[Cypher `vector` constructor], or use the xref:typed-json[Typed JSON result format].
+|===
