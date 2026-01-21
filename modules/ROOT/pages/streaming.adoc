@@ -1,6 +1,6 @@
 :page-role: new-2025.12
 
-= Streaming results
+= Stream results
 
 The Query API can stream values as events over HTTP.
 This allows clients to process data incrementally as it arrives, improving memory efficiency and enabling applications to handle larger datasets.
