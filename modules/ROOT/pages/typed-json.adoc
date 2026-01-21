@@ -1,8 +1,12 @@
-:description: Neo4j Query API result formats, data types, and mapping to Cypher types.
+:description: In the typed JSON result format, each return value is an object where the type and value information are stored as separate keys.
 
 = Typed JSON
 
-Plain JSON does not provide information about the type of a returned value.
+
+[[plain-vs-typed]]
+== Plain vs Typed JSON
+
+The xref:plain-json.adoc[Plain JSON result format] does not provide information about the type of a returned value.
 For example, the two following requests result in the exact same response, even if in the first case the return value is a Cypher `STRING`, while in the second case it is a `ZONED DATETIME`.
 
 [caption=]
@@ -23,7 +27,12 @@ For example, the two following requests result in the exact same response, even 
 ====
 
 If you care about what type each returned value is, you can use Neo4j's extended JSON format with type information.
-To receive the result in this format, set `Accept: application/vnd.neo4j.query.v1.1` in the request headers.
+
+
+[[enable]]
+== Enable Typed JSON
+
+To receive the result in Typed JSON format, set `Accept: application/vnd.neo4j.query.v1.1` in the request headers.
 
 In this format, each return value is an object where the type and value information are stored as separate keys:
 
@@ -37,6 +46,10 @@ In this format, each return value is an object where the type and value informat
 ----
 
 If you wish to also submit parameters with this format, set `Content-Type: application/vnd.neo4j.query.v1.1` in the request headers.
+
+
+[[examples]]
+== Examples
 
 .Both parameters and result data in extended JSON format
 ====

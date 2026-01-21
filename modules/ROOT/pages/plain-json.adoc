@@ -1,12 +1,17 @@
-:description: Neo4j Query API result formats, data types, and mapping to Cypher types.
+:description: Plain JSON is the default result format. It returns results as JSON, with the query results embedded within the `data` object.
+
 
 = Plain JSON
 
-The JSON format is the default one.
-It returns plain JSON, with the query results embedded within the `data` object.
+Plain JSON is the default result format.
+It returns results as JSON, with the query results embedded within the `data` object.
+
 To request this format, set `Accept: application/json` in the request headers (or omit it entirely, as it is the default if no `Accept` header is provided).
 
-.JSON output format prototype
+
+[[output-prototype]]
+== JSON output format prototype
+
 [source, JSON]
 ----
 {
@@ -19,6 +24,10 @@ To request this format, set `Accept: application/json` in the request headers (o
 
 <1> Query fields, i.e. keys for the returned objects
 <2> Query results. The outer array represents a single result (or row) where the inner array contains the individual values for that result (the inner structure of each element depends on the object type).
+
+
+[[examples]]
+== Examples
 
 .Return a node and a property
 ====
