@@ -7,11 +7,12 @@
 * xref:profile-query.adoc[]
 * xref:bookmarks.adoc[]
 * xref:impersonation.adoc[]
+* xref:streaming.adoc[]
 
 * **Reference**
 * xref:endpoints.adoc[]
 * xref:headers.adoc[]
-* Result Formats
+* Result formats & Data types
 ** xref:plain-json.adoc[]
 ** xref:typed-json.adoc[]
 * xref:changelog.adoc[]
