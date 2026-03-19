@@ -284,13 +284,23 @@ When returning values, values with magnitude between `10⁻³` (inclusive) and `
 }
 ----
 
-| ZONED DATETIME
+| ZONE DATETIME
+| ZonedDateTime
+| [source, JSON]
+----
+{
+  "$type": "ZonedDateTime",
+  "_value": "2015-11-21T21:40:32.142Z[Antarctica/Troll]"
+}
+----
+
+| OFFSET DATETIME
 | OffsetDateTime
 | [source, JSON]
 ----
 {
   "$type": "OffsetDateTime",
-  "_value": "2015-11-21T21:40:32.142Z[Antarctica/Troll]"
+  "_value": "2015-11-21T21:40:32.142Z"
 }
 ----
 
