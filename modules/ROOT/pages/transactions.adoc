@@ -306,6 +306,81 @@ Content-Type: application/json
 ====
 
 
+[#tx-config]
+== Transaction configuration
+
+You can provide optional configuration parameters when creating a transaction.
+You can specify:
+
+include::{partials}/transactions.adoc[tag=transactions-conf]
+
+====
+[discrete]
+=== Example request
+
+[source, headers]
+----
+POST http://localhost:7474/db/neo4j/query/v2/tx
+Accept: application/json
+Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
+Content-Type: application/json
+----
+
+[source, JSON]
+----
+{
+  "statement": "MERGE (n:Person {name: $name, age: $age}) RETURN n AS alice",
+  "parameters": {
+    "name": "Alice",
+    "age": 42
+  },
+  "txMetadata": {
+    "appName": "People"
+  },
+  "maxExecutionTime": 30
+}
+----
+
+[discrete]
+=== Example response
+
+[source, headers]
+----
+202: Accepted
+Content-Type: application/json
+neo4j-cluster-affinity: MTAuOC41Ljc6MTc0NzQ=
+----
+
+[source, JSON]
+----
+{
+  "data": {
+    "fields": [
+      "alice"
+    ],
+    "values": [
+      [
+        {
+          "elementId": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:0",
+          "labels": [
+            "Person"
+          ],
+          "properties": {
+            "name": "Alice",
+            "age": 42
+          }
+        }
+      ]
+    ]
+  },
+  "transaction": {
+    "id": "lyU",
+    "expires": "2024-10-22T15:48:29Z"
+  }
+}
+----
+====
+
 == Authentication failure on open transactions
 
 An authentication error (`Neo.ClientError.Security.Unauthorized`) in a request to an open transaction results in a rollback.

@@ -191,6 +191,80 @@ Content-Type: application/json
 ====
 
 
+[role=label--new-2026.04]
+[#tx-config]
+== Transaction configuration
+
+You can provide optional configuration parameters when submitting a query.
+You can specify:
+
+include::{partials}/transactions.adoc[tag=transactions-conf]
+
+====
+[discrete]
+=== Example request
+
+[source, headers]
+----
+POST http://localhost:7474/db/neo4j/query/v2
+Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
+Content-Type: application/json
+----
+
+[source, JSON]
+----
+{
+  "statement": "MERGE (n:Person {name: $name, age: $age}) RETURN n AS alice",
+  "parameters": {
+    "name": "Alice",
+    "age": 42
+  },
+  "txMetadata": {
+    "appName": "People"
+  },
+  "maxExecutionTime": 30
+}
+----
+
+[discrete]
+=== Example response
+
+[source, headers]
+----
+202: Accepted
+Content-Type: application/json
+----
+
+[source, JSON, role=nocollapse]
+----
+{
+  "data": {
+    "fields": [
+      "alice"
+    ],
+    "values": [
+      [
+        {
+          "elementId": "4:ff04df25-ff2b-4b55-98f8-6888297b025e:0",
+          "labels": [
+            "Person"
+          ],
+          "properties": {
+            "name": "Alice",
+            "age": 42
+          }
+        }
+      ]
+    ]
+  },
+  "bookmarks": [
+    "FB:kcwQ/wTfJf8rS1WY+GiIKXsCXgmQ"
+  ]
+}
+----
+====
+
+
 ifndef::backend-pdf[]
 [discrete.glossary]
 == Glossary
