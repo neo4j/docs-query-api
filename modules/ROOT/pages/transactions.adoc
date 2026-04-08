@@ -114,7 +114,7 @@ Use `elementId` with care, as no guarantees are given about the mapping between 
 For example, using an `elementId` to `MATCH` an element across different transactions is risky.
 <.> Bookmarks are used to enforce an ordering to transactions. +
 For more information, see xref:bookmarks.adoc[].
-<.> Transaction metadata.
+<.> Transaction information.
 Use the ID for subsequent request URIs.
 ====
 
