@@ -336,7 +336,7 @@ When returning values, values with magnitude between `10⁻³` (inclusive) and `
 
 [NOTE]
 ====
-For 3D points, use POINT Z instead of POINT. For example:
+For 3D points, use `POINT Z` instead of `POINT`. For example:
 ----
 {
   "$type": "Point",
