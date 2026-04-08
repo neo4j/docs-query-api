@@ -334,6 +334,18 @@ When returning values, values with magnitude between `10⁻³` (inclusive) and `
 }
 ----
 
+[NOTE]
+====
+For 3D points, use `POINT Z` instead of `POINT`. For example:
+----
+{
+  "$type": "Point",
+  "_value": "SRID=9157;POINT Z (1.0 2.0 3.0)"
+
+}
+----
+====
+
 | NODE
 | Node
 | [source, JSON]

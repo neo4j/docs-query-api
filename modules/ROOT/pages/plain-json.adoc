@@ -180,6 +180,7 @@ true
 | [source, JSON]
 ----
 "SRID=7203;POINT (1.2 3.4)"
+"SRID=9157;POINT Z (1.0 2.0 3.0)"
 ----
 
 | NODE
