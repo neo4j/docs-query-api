@@ -306,6 +306,7 @@ Content-Type: application/json
 ====
 
 
+[role=label--new-2026.04]
 [#tx-config]
 == Transaction configuration
 
