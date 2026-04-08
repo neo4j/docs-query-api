@@ -1,0 +1,11 @@
+# tag::transactions-conf[]
+
+* `maxExecutionTime` -- Transaction timeout (seconds).
+Transactions that run longer will be terminated by the server.
+The default value is set on the server side.
+* `txMetadata` -- A map of metadata to attach to the transaction.
+Use this to tag transactions.
+These metadata get logged in the server `query.log` and are visible in the output of the `SHOW TRANSACTION` Cypher command.
+With the xref:typed-json.adoc[Typed JSON result format], the metadata fields must be typed accordingly.
+
+# end::transactions-conf[]
