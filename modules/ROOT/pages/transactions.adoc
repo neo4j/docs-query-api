@@ -105,7 +105,7 @@ neo4j-cluster-affinity: MTAuOC41Ljc6MTc0NzQ=  // <2>
 <.> Because the server does not know whether the request will be successful or not when it sends the HTTP status code, all API requests return a `202` status code, regardless of whether the statements were successfully executed.
 The only exception is authentication errors, which result in a `401` status code.
 <.> The header `neo4j-cluster-affinity` is only returned from Aura instances, and identifies the cluster member handling the transaction.
-It must be included as a header to all subsequent requests, including commit/rollback requests.
+It must be included as a header to all subsequent requests for this transaction, including commit/rollback requests.
 <.> Query result keys.
 <.> Query result values for each result returned by the query. Each individual result values are in the same order as `fields`. +
 For more information on what format the values may take, see xref:plain-json.adoc[] and xref:typed-json.adoc[].
