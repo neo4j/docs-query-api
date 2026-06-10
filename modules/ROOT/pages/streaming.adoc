@@ -8,7 +8,7 @@ This allows clients to process data incrementally as it arrives, improving memor
 You enable streaming by tweaking the `Accept` header:
 
 * For xref:plain-json.adoc[Plain JSON], `application/jsonl`.
-* For xref:typed-json.adoc[Typed JSON], add the suffix `+jsonl`. For example, `application/vnd.neo4j.query.v1.1+jsonl`.
+* For xref:typed-json.adoc[Typed JSON], add the suffix `+jsonl`. For example, `application/vnd.neo4j.query.v1.2+jsonl`.
 
 [NOTE]
 For clarity, JSON objects in this page are formatted with line breaks.
