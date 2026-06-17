@@ -85,7 +85,8 @@ Content-Type: application/json
   },
   "bookmarks": [
     "FB:kcwQ/wTfJf8rS1WY+GiIKXsCXg6Q"
-  ]
+  ],
+  "queryType": "rw"
 }
 ----
 

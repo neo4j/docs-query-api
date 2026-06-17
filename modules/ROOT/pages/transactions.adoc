@@ -98,7 +98,8 @@ neo4j-cluster-affinity: MTAuOC41Ljc6MTc0NzQ=  // <2>
   "transaction": {  // <7>
     "id": "lyU",
     "expires": "2024-10-22T15:48:29Z"
-  }
+  },
+  "queryType": "rw"
 }
 ----
 
@@ -193,7 +194,8 @@ Content-Type: application/json
   "transaction": {
     "id": "lyU",
     "expires": "2024-10-22T15:48:29Z"
-  }
+  },
+  "queryType": "rw"
 }
 ----
 ====
@@ -377,7 +379,8 @@ neo4j-cluster-affinity: MTAuOC41Ljc6MTc0NzQ=
   "transaction": {
     "id": "lyU",
     "expires": "2024-10-22T15:48:29Z"
-  }
+  },
+  "queryType": "rw"
 }
 ----
 ====

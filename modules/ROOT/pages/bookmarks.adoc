@@ -64,7 +64,8 @@ Content-Type: application/json
     "source": "Alice",
     "end": "Lucy"
   },
-  "bookmarks": ["FB:kcwQt8DpQx5zR0uN3Oj/OudM3QaQ", "FB:kcwQy9mp3ioyRom386bZDRRcuCiQ"]
+  "bookmarks": ["FB:kcwQt8DpQx5zR0uN3Oj/OudM3QaQ", "FB:kcwQy9mp3ioyRom386bZDRRcuCiQ"],
+  "queryType": "rw"
 }
 ----
 ====
