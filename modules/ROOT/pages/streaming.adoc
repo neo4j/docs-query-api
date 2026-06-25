@@ -77,7 +77,7 @@ Summary
 {"$event":"Header","_body":{"fields":["name","age"]}}
 {"$event":"Record","_body": ["Alice",32]}
 {"$event":"Record","_body": ["Bob",29]}
-{"$event":"Summary","_body":{"bookmarks":["FB:kcwQ/wTfJf8rS1WY+GiIKXsCXgmQ"], "queryType": "r"}}
+{"$event":"Summary","_body":{"bookmarks":["FB:kcwQ/wTfJf8rS1WY+GiIKXsCXgmQ"],"queryType": "r"}}
 ----
 ======
 =====
