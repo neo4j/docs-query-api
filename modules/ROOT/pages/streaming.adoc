@@ -201,7 +201,7 @@ The `Summary` event marks the end of the stream and provides metadata about the 
 * `counters` (optional) -- Statistics about the changes performed by the query. See xref:query-counters.adoc[].
 * `queryPlan` (optional) -- The logical query plan. See xref:profile-query.adoc[].
 * `profiledQueryPlan` (optional) -- Detailed execution metrics, if the query was run with profiling enabled. See xref:profile-query.adoc[].
-* `queryType` label:new[Introduced in 2026.07] (optional) -- Type of query executed: read only ("r"), read write ("rw"), write only ("w") and schema write ("s").
+* `queryType` (optional) -- Type of query executed: read only (`"r"`), read write (`"rw"`), write only (`"w"`) and schema write (`"s"`). label:new[Introduced in 2026.07]
 
 
 [[event-error]]
