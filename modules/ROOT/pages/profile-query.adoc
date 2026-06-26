@@ -116,7 +116,8 @@ Content-Type: application/json
   },
   "bookmarks": [
     "FB:kcwQC685m8YsRuyUSvMWiiQriwKQ"
-  ]
+  ],
+  "queryType": "r"
 }
 ----
 ====

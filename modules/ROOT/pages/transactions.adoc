@@ -98,7 +98,8 @@ neo4j-cluster-affinity: MTAuOC41Ljc6MTc0NzQ=  // <2>
   "transaction": {  // <7>
     "id": "lyU",
     "expires": "2024-10-22T15:48:29Z"
-  }
+  },
+  "queryType": "rw"  // <8>
 }
 ----
 
@@ -116,6 +117,7 @@ For example, using an `elementId` to `MATCH` an element across different transac
 For more information, see xref:bookmarks.adoc[].
 <.> Transaction information.
 Use the ID for subsequent request URIs.
+<.> Type of query executed: read only (`"r"`), read write (`"rw"`), write only (`"w"`) and schema write (`"s"`). label:new[Introduced in 2026.07]
 ====
 
 
@@ -193,7 +195,8 @@ Content-Type: application/json
   "transaction": {
     "id": "lyU",
     "expires": "2024-10-22T15:48:29Z"
-  }
+  },
+  "queryType": "rw"
 }
 ----
 ====
@@ -377,7 +380,8 @@ neo4j-cluster-affinity: MTAuOC41Ljc6MTc0NzQ=
   "transaction": {
     "id": "lyU",
     "expires": "2024-10-22T15:48:29Z"
-  }
+  },
+  "queryType": "rw"
 }
 ----
 ====
