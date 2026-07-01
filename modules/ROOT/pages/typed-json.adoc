@@ -32,7 +32,7 @@ If you care about what type each returned value is, you can use Neo4j's extended
 [[enable]]
 == Enable Typed JSON
 
-To receive the result in Typed JSON format, set `Accept: application/vnd.neo4j.query.v1.2` in the request headers.
+To receive the result in Typed JSON format, set `Accept: application/{typed-json-version}` in the request headers.
 
 In this format, each return value is an object where the type and value information are stored as separate keys:
 
@@ -45,7 +45,7 @@ In this format, each return value is an object where the type and value informat
 }
 ----
 
-If you wish to also submit parameters with this format, set `Content-Type: application/vnd.neo4j.query.v1.2` in the request headers.
+If you wish to also submit parameters with this format, set `Content-Type: application/{typed-json-version}` in the request headers.
 
 
 [[examples]]
@@ -56,12 +56,12 @@ If you wish to also submit parameters with this format, set `Content-Type: appli
 [discrete]
 === Example request
 
-[source, headers]
+[source, headers, subs="attributes+"]
 ----
 POST http://localhost:7474/db/neo4j/query/v2
 Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
-Accept: application/vnd.neo4j.query.v1.2
-Content-Type: application/vnd.neo4j.query.v1.2
+Accept: application/{typed-json-version}
+Content-Type: application/{typed-json-version}
 ----
 
 [source, JSON]
@@ -80,10 +80,10 @@ Content-Type: application/vnd.neo4j.query.v1.2
 [discrete]
 === Example response
 
-[source, headers]
+[source, headers, subs="attributes+"]
 ----
 202: Accepted
-Content-Type: application/vnd.neo4j.query.v1.2
+Content-Type: application/{typed-json-version}
 ----
 
 [source, JSON]
