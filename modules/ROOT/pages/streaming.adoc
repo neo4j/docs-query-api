@@ -77,7 +77,7 @@ Summary
 {"$event":"Header","_body":{"fields":["name","age"]}}
 {"$event":"Record","_body": ["Alice",32]}
 {"$event":"Record","_body": ["Bob",29]}
-{"$event":"Summary","_body":{"bookmarks":["FB:kcwQ/wTfJf8rS1WY+GiIKXsCXgmQ"],"queryType": "r"}}
+{"$event":"Summary","_body":{"bookmarks":["FB:kcwQ/wTfJf8rS1WY+GiIKXsCXgmQ"],"queryType": "r","resultAvailableAfter": 10,"resultConsumedAfter": 25}}
 ----
 ======
 =====
@@ -190,7 +190,9 @@ The `Summary` event marks the end of the stream and provides metadata about the 
     "notifications": [ /* notifications structure */ ],"counters": { /* counters structure */},
     "queryPlan": { /* query plan structure */ },
     "profiledQueryPlan": { /* profiled query plan structure */ },
-    "queryType": "r"
+    "queryType": "r",
+    "resultAvailableAfter": 10,
+    "resultConsumedAfter": 25
   }
 }
 ----
@@ -202,6 +204,8 @@ The `Summary` event marks the end of the stream and provides metadata about the 
 * `queryPlan` (optional) -- The logical query plan. See xref:profile-query.adoc[].
 * `profiledQueryPlan` (optional) -- Detailed execution metrics, if the query was run with profiling enabled. See xref:profile-query.adoc[].
 * `queryType` (optional) -- Type of query executed: read only (`"r"`), read write (`"rw"`), write only (`"w"`) and schema write (`"s"`). label:new[Introduced in 2026.07]
+* `resultAvailableAfter` (optional) -- Elapsed time in milliseconds for result be available to be consumed label:new[Introduced in 2026.07]
+* `resultConsumedAfter` (optional) -- Elapsed time in milliseconds for consume the result. label:new[Introduced in 2026.07]
 
 
 [[event-error]]
