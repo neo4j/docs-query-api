@@ -205,7 +205,7 @@ The `Summary` event marks the end of the stream and provides metadata about the 
 * `profiledQueryPlan` (optional) -- Detailed execution metrics, if the query was run with profiling enabled. See xref:profile-query.adoc[].
 * `queryType` (optional) -- Type of query executed: read only (`"r"`), read write (`"rw"`), write only (`"w"`) and schema write (`"s"`). label:new[Introduced in 2026.07]
 * `resultAvailableAfter` (optional) -- Elapsed time in milliseconds for result be available to be consumed label:new[Introduced in 2026.07]
-* `resultConsumedAfter` (optional) -- Elapsed time in milliseconds for consume the result. label:new[Introduced in 2026.07]
+* `resultConsumedAfter` (optional) -- Elapsed time in milliseconds to consume the result. label:new[Introduced in 2026.07]
 
 
 [[event-error]]
