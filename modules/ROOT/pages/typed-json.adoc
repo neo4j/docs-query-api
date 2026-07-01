@@ -121,7 +121,9 @@ Content-Type: application/vnd.neo4j.query.v1.1
   "bookmarks": [
     "FB:kcwQ/wTfJf8rS1WY+GiIKXsCXg6Q"
   ],
-  "queryType": "rw"
+  "queryType": "rw",
+  "resultAvailableAfter": 10,
+  "resultConsumedAfter": 25
 }
 ----
 

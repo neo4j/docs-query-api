@@ -73,7 +73,9 @@ Content-Type: application/json
   "bookmarks": [  // <5>
     "FB:kcwQ/wTfJf8rS1WY+GiIKXsCXgmQ"
   ],
-  "queryType": "rw" // <6>
+  "queryType": "rw", // <6>
+  "resultAvailableAfter": 10, // <7>
+  "resultConsumedAfter": 25 // <8>
 }
 ----
 
@@ -88,6 +90,8 @@ For example, using an `elementId` to `MATCH` an element across different transac
 <5> Bookmarks are used to enforce an ordering to transactions. +
 For more information, see xref:bookmarks.adoc[].
 <6> Type of query executed: read only (`"r"`), read write (`"rw"`), write only (`"w"`) and schema write (`"s"`). label:new[Introduced in 2026.07]
+<7> Elapsed time in milliseconds for result be available to be consumed label:new[Introduced in 2026.07]
+<8> Elapsed time in milliseconds to consume the result. label:new[Introduced in 2026.07]
 
 ====
 
@@ -262,7 +266,9 @@ Content-Type: application/json
   "bookmarks": [
     "FB:kcwQ/wTfJf8rS1WY+GiIKXsCXgmQ"
   ],
-  "queryType": "rw"
+  "queryType": "rw",
+  "resultAvailableAfter": 10,
+  "resultConsumedAfter": 25
 }
 ----
 ====

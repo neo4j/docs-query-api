@@ -35,7 +35,9 @@ All responses include a `bookmarks` field containing a list of encoded bookmarks
   "bookmarks": [
     "FB:kcwQ/wTfJf8rS1WY+GiIKXsCXgmQ"
   ],
-  "queryType": "rw"
+  "queryType": "rw",
+  "resultAvailableAfter": 10,
+  "resultConsumedAfter": 25
 }
 ----
 
