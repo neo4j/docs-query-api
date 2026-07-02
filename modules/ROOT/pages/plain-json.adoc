@@ -281,6 +281,6 @@ To create vectors, use the link:https://neo4j.com/docs/cypher-manual/current/val
 label:new[Introduced in 2026.07]
 
 [NOTE]
-UUID values can only be retrieved from the database, but cannot be passed as parameters in Plain JSON.
+UUID values can only be retrieved from the database in plain JSON format. To pass them as parameters, use xref:typed-json.adoc[typed JSON].
 
 |===
