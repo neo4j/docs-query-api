@@ -8,3 +8,4 @@ asciidoc:
   attributes:
     page-origin-private: false
     neo4j-version: '5'
+    typed-json-version: 'vnd.neo4j.query.v1.2'

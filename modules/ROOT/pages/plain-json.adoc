@@ -269,4 +269,18 @@ label:enterprise-edition[] label:new[Introduced in 2025.10]
 [NOTE]
 link:https://neo4j.com/docs/cypher-manual/current/values-and-types/vector/[`VECTOR`] values can only be retrieved from the database, but cannot be passed as parameters in Plain JSON.
 To create vectors, use the link:https://neo4j.com/docs/cypher-manual/current/values-and-types/vector/#construct-vector-values[Cypher `vector` constructor], or use the xref:typed-json.adoc[Typed JSON result format].
+
+| UUID
+| string (ISO-9834)
+| [source, JSON]
+----
+"550e8400-e29b-41d4-a716-446655440000"
+"00000000-0000-0000-0000-000000000000"
+----
+
+label:new[Introduced in 2026.07]
+
+[NOTE]
+UUID values can only be retrieved from the database in plain JSON format. To pass them as parameters, use xref:typed-json.adoc[typed JSON].
+
 |===
