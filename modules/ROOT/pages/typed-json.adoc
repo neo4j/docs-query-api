@@ -494,13 +494,6 @@ label:new[Introduced in 2025.11]
   "_value": "550e8400-e29b-41d4-a716-446655440000"
 }
 ----
-[source, JSON]
-----
-{
-  "$type": "UUID",
-  "_value": "00000000-0000-0000-0000-000000000000"
-}
-----
 label:new[Introduced in 2026.07]
 
 |===
