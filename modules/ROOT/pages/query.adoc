@@ -195,6 +195,62 @@ Content-Type: application/json
 }
 ----
 ====
+[role=label--new-2026.08]
+[#filter-notifications]
+=== Filter notifications
+
+By default, the server analyses each query for all categories and severity of notifications. Use the parameters `minimumSeverityLevel` and/or `disabledCategories` to restrict the severity and/or category of notifications that you are interested into. There is a slight performance gain in restricting the amount of notifications the server is allowed to raise. You can use any of those parameters either when running a single query or while begin a transaction.
+
+The filter can be configured trough the optional `notificationsFilter`. This is an object which can contain the following properties: 
+
+* `minimumSeverityLevel` (optional) - Defines the minimum severity level . Possible values: `WARNING``, `INFORMATION` and `OFF`.
+* `disabledCategories` (optional) - Defines the list of categories disabled to be returned. Possible values on the list:  `HINT`, `UNRECOGNIZED`, `UNSUPPORTED`,  `PERFORMANCE`,  `TOPOLOGY`,  `SECURITY`,  `DEPRECATION`,  `GENERIC`  and `SCHEMA`
+
+====
+[discrete]
+=== Example request
+
+[source, headers]
+----
+POST http://localhost:7474/db/neo4j/query/v2
+Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
+Content-Type: application/json
+----
+
+[source, JSON]
+----
+{
+  "statement": "MATCH p=shortestPath((:Person {name: $from})-[*]->(:Person {name: $to})) RETURN p",
+  "parameters": {
+    "from": "Alice",
+    "to": "Bob"
+  },
+  "notificationsFilter": {
+    "minimumSeverityLevel": "INFORMATION",
+    "disabledCategories": ["PERFORMANCE", "TOPOLOGY"]
+  }
+}
+----
+
+[discrete]
+=== Example response
+
+[source, headers]
+----
+202: Accepted
+Content-Type: application/json
+----
+
+[source, JSON, role=nocollapse]
+----
+{
+  "data": [
+    ...
+  ],
+  ...
+}
+----
+====
 
 
 [role=label--new-2026.04]
