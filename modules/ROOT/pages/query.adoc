@@ -140,6 +140,9 @@ For general information on parameters, see link:{neo4j-docs-base-uri}/cypher-man
 If the server generates any link:{neo4j-docs-base-uri}/status-codes/current/notifications[notifications], they will be returned in the `notifications` key of the response object (as a list).
 Notifications include recommendations for performance improvements, warnings about the usage of deprecated features, and other hints about sub-optimal usage of Neo4j.
 
+[NOTE]
+If the server generates an unsupported notification category, the Query API will omit the category field.
+
 ====
 [discrete]
 === Example request
