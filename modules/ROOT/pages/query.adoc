@@ -140,6 +140,9 @@ For general information on parameters, see link:{neo4j-docs-base-uri}/cypher-man
 If the server generates any link:{neo4j-docs-base-uri}/status-codes/current/notifications[notifications], they will be returned in the `notifications` key of the response object (as a list).
 Notifications include recommendations for performance improvements, warnings about the usage of deprecated features, and other hints about sub-optimal usage of Neo4j.
 
+[NOTE]
+If the server generates an unsupported notification category, the Query API will omit the category field.
+
 ====
 [discrete]
 === Example request
@@ -154,7 +157,7 @@ Content-Type: application/json
 [source, JSON]
 ----
 {
-  "statement": "MATCH p=shortestPath((:Person {name: $from})-[*]->(:Person {name: $to})) RETURN p",
+  "statement": "MATCH p=shortestPath((:Person {name: $from})-[*]->(:ThisLabelDoesntExist {name: $to})) RETURN p",
   "parameters": {
     "from": "Alice",
     "to": "Bob"
@@ -179,16 +182,98 @@ Content-Type: application/json
   ],
   "notifications": [
     {
+      "code": "Neo.ClientNotification.Statement.UnknownLabelWarning",
+      "description": "One of the labels in your query is not available in the database, make sure you didn't misspell it or that the label is available when you run this statement in your application (the missing label name is: ThisLabelDoesntExist)",
+      "severity": "WARNING",
+      "title": "The provided label is not in the database.",
+      "position": {
+        "offset": 52,
+        "line": 1,
+        "column": 53
+      },
+      "category": "UNRECOGNIZED"
+    },
+    {
       "code": "Neo.ClientNotification.Statement.UnboundedVariableLengthPattern",
       "description": "Using shortest path with an unbounded pattern will likely result in long execution times. It is recommended to use an upper limit to the number of node hops in your pattern.",
       "severity": "INFORMATION",
       "title": "The provided pattern is unbounded, consider adding an upper limit to the number of node hops.",
       "position": {
-          "offset": 21,
-          "line": 1,
-          "column": 22
+        "offset": 21,
+        "line": 1,
+        "column": 22
       },
       "category": "PERFORMANCE"
+    }
+  ],
+  ...
+}
+----
+====
+[role=label--new-2026.08]
+[#filter-notifications]
+=== Filter notifications
+
+By default, the server analyses each query for all categories and severity of notifications. Use the parameters `minimumSeverityLevel` and/or `disabledCategories` to restrict the severity and/or category of notifications that you are interested into. There is a slight performance gain in restricting the amount of notifications the server is allowed to raise. You can use any of those parameters either when running a single query or while begin a transaction.
+
+The filter can be configured trough the optional `notificationsFilter`. This is an object which can contain the following properties: 
+
+* `minimumSeverityLevel` (optional) - Defines the minimum severity level . Possible values: `WARNING``, `INFORMATION` and `OFF`.
+* `disabledCategories` (optional) - Defines the list of categories disabled to be returned. Possible values on the list:  `HINT`, `UNRECOGNIZED`, `UNSUPPORTED`,  `PERFORMANCE`,  `TOPOLOGY`,  `SECURITY`,  `DEPRECATION`,  `GENERIC`  and `SCHEMA`
+
+====
+[discrete]
+=== Example request
+
+[source, headers]
+----
+POST http://localhost:7474/db/neo4j/query/v2
+Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
+Content-Type: application/json
+----
+
+[source, JSON]
+----
+{
+  "statement": "MATCH p=shortestPath((:Person {name: $from})-[*]->(:ThisLabelDoesntExist {name: $to})) RETURN p",
+  "parameters": {
+    "from": "Alice",
+    "to": "Bob"
+  },
+  "notificationsFilter": {
+    "minimumSeverityLevel": "INFORMATION",
+    "disabledCategories": ["PERFORMANCE", "TOPOLOGY"]
+  }
+}
+----
+
+[discrete]
+=== Example response
+
+[source, headers]
+----
+202: Accepted
+Content-Type: application/json
+----
+
+[source, JSON, role=nocollapse]
+----
+{
+  "data": [
+    ...
+  ],
+  "notifications": [
+    {
+      "code": "Neo.ClientNotification.Statement.UnknownLabelWarning",
+      "description": "One of the labels in your query is not available in the database, make sure you didn't misspell it or that the label is available when you run this statement in your application (the missing label name is: ThisLabelDoesntExist)",
+      "severity": "WARNING",
+      "title": "The provided label is not in the database.",
+      "position": {
+        "offset": 52,
+        "line": 1,
+        "column": 53
+      },
+      "category": "UNRECOGNIZED"
     }
   ],
   ...
