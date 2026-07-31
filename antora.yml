@@ -6,6 +6,8 @@ nav:
 - modules/ROOT/content-nav.adoc
 asciidoc:
   attributes:
+    page-tabs: drivers-apis@
+    page-tabs-index: 50
     page-origin-private: false
     neo4j-version: '5'
     typed-json-version: 'vnd.neo4j.query.v1.2'
