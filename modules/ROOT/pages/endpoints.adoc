@@ -72,8 +72,8 @@ GET http://localhost:7474/
 <2> The URL where the Query API is available. label:new[Introduced in 2026.09] +
 This URL has two URL parameters:
 +
-* `{databaseName}`: The name of the database where the action will be performed, for example `neo4j`.
-* `{queryApiMajorVersion}`: The major version of the Query API used, for example `2`. See available versions on `query_api_versions`.
+* `\{databaseName\}`: The name of the database where the action will be performed, for example `neo4j`.
+* `\{queryApiMajorVersion\}`: The major version of the Query API used, for example `2`. See available versions on `query_api_versions`.
 <3> List containing the Query API versions available on the server. Each version listed in the response corresponds to the latest minor version that is supported. All prior versions within the major version will continue to be supported since the API is backwards compatible. label:new[Introduced in 2026.09]
 
 [NOTE]
