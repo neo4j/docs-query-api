@@ -53,7 +53,7 @@ GET http://localhost:7474/
 {
     "bolt_routing": "neo4j://localhost:7687",
     "query": "http://localhost:7474/db/{databaseName}/query/v2", // <1>
-    "query_api": "http://{server_address}:7474/db/{databaseName}/query/v{queryApiMajorVersion}", // <2>
+    "query_api": "http://localhost:7474/db/{databaseName}/query/v{queryApiMajorVersion}", // <2>
     "query_api_versions": ["2.0"], // <3>
     "dbms/cluster": "http://localhost:7474/dbms/cluster",
     "db/cluster": "http://localhost:7474/db/{databaseName}/cluster",
