@@ -153,5 +153,5 @@ Changes per Neo4j Database release.
 [#version-5-23]
 === Neo4j 5.23
 
-- Query API is introduced as preview on the database. 
+- Query API is introduced as preview on the database. This can be enabled by adding `QUERY_API_ENDPOINTS` to  the `server.http_enabled_modules` configuration. More information on this configuration property at https://neo4j.com/docs/operations-manual/current/configuration/configuration-settings/#config_server.http_enabled_modules[here].
 - Initial implementation for xref:plain-json.adoc[Untyped JSON result format] (`application/json`) and xref:typed-json.adoc[Typed JSON result format] (`application/vnd.neo4j.query`).
