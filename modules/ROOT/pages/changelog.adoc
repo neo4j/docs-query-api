@@ -108,7 +108,7 @@ Changes per Neo4j Database release.
 === Neo4j 2025.10
 
 - Introduce `application/vnd.neo4j.query.v1.0` in Query Api, alias for `application/vnd.neo4j.query`
-- Add handling for `Unsupported Type` on typed and untyped json.
+- Add handling for `UnsupportedType` as exception on typed and untyped json.
 - Introduce Vector type support for untyped json
 - Internal improvements on racing conditions while finishing transactions 
 
