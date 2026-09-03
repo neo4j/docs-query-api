@@ -65,10 +65,10 @@ Changes per Neo4j Database release.
 - Introduce `UUID` support to Plain JSON
 - Introduce `application/vnd.neo4j.query.v1.2``
     * Introduce `UUID` type.
-- Introduce `queryType`
-- Introduce `resultAvailableAfter` and `resultConsumedAfter`
+- Introduce `queryType` to result summary
+- Introduce `resultAvailableAfter` and `resultConsumedAfter` to result summary
 - Fix Vector de-serialization. Remove the need for submitting the fields in order. 
-- Fix `profileQueryPlan` optional fields. Non-present fields being omitted instead of defaulting to `0`.
+- Fix `profileQueryPlan` optional fields on result summary. Non-present fields being omitted instead of defaulting to `0`.
 
 [#version-2026-06]
 === Neo4j 2026.06
@@ -126,7 +126,7 @@ Changes per Neo4j Database release.
 [#version-2025-06]
 === Neo4j 2025.06
 
-- Add support for transaction type (`txType`).
+- Add support for transaction type (`txType`) on auto-commit query and transaction begin requests.
 
 [#version-2025-04]
 === Neo4j 2025.04
