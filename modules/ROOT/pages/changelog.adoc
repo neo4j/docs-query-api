@@ -2,15 +2,29 @@
 
 = Changelog
 
+== Query API changelog
+
+Changes per Query API version.
+
+[#query-api-version-2-0]
+[role=label--new-5.23]
+=== Query API 2.0
+
+Initial release.
+
+== Typed JSON Media-type changelog
+
+Changes per xref:typed-json.adoc[Typed JSON] media type version.
+
 [#typed-json-version-1-2]
 [role=label--new-2026.07]
-== application/vnd.neo4j.query.v1.2
+=== application/vnd.neo4j.query.v1.2
 
 - Introduce `UUID` type.
 
 [#typed-json-version-1-1]
 [role=label--new-2025.11]
-== application/vnd.neo4j.query.v1.1
+=== application/vnd.neo4j.query.v1.1
 
 - Introduce `Vector` type.
 - Introduce `Unsupported` type.
@@ -18,12 +32,118 @@
 
 [#typed-json-version-1-0]
 [role=label--new-2025.10]
-== application/vnd.neo4j.query.v1.0
+=== application/vnd.neo4j.query.v1.0
 
 Alias for `application/vnd.neo4j.query`.
 
-
 [#typed-json-version-0]
-== application/vnd.neo4j.query
+=== application/vnd.neo4j.query
 
 Initial implementation of the xref:typed-json.adoc[Typed JSON result format].
+
+== Server changelog
+
+Changes per Neo4j server release.
+
+[#version-2026-09]
+=== Neo4j 2026.09
+
+- Introduce `query_api` and `query_api_versions` fields to the discovery endpoint; deprecate field `query`.
+
+
+[#version-2026-08]
+=== Neo4j 2026.08
+
+- Introduce `notificationsFilter`.
+- Fix request de-serialization. Remove the need for submitting the fields in order.
+- Adjust transaction ID collision error message.
+
+[#version-2026-07]
+=== Neo4j 2026.07
+
+- Introduce `UUID` support to Plain JSON
+- Introduce `application/vnd.neo4j.query.v1.2`
+    * Introduce `UUID` type.
+- Introduce `queryType` to result summary.
+- Introduce `resultAvailableAfter` and `resultConsumedAfter` to result summary
+- Fix `Vector` de-serialization. Remove the need for submitting the fields in order.
+- Fix `profileQueryPlan` optional fields on result summary. Non-present fields being omitted instead of defaulting to `0`.
+
+[#version-2026-04]
+=== Neo4j 2026.04
+
+- Introduce `txMetadata`
+- Fix `ZonedDateTime` handling by enforcing that all `ZonedDateTime` values include a valid `ZoneId`, and rejecting inputs that only contain an offset.
+
+[#version-2026-01]
+=== Neo4j 2026.01
+
+- Fix error handling when streaming query results.
+
+[#version-2025-12]
+=== Neo4j 2025.12
+
+- Introduce JSONL support
+    * `application/jsonl` for untyped json
+    * the typed json are suffixed with `+jsonl`. `application/vnd.neo4j.query.v1.0+jsonl` and `application/vnd.neo4j.query.v1.1+jsonl` in this initial implementation.
+
+[#version-2025-11]
+=== Neo4j 2025.11
+
+- Introduce `application/vnd.neo4j.query.v1.1`
+    * Introduce `Vector` type.
+    * Introduce `Unsupported` type.
+- Use GQL Status for defining HTTP Status code.
+- Internal improvements on transaction timeout handling.
+
+[#version-2025-10]
+=== Neo4j 2025.10
+
+- Introduce `application/vnd.neo4j.query.v1.0`, alias for `application/vnd.neo4j.query`.
+- Add handling for `UnsupportedType` as exception on typed and untyped json.
+- Introduce Vector type support for untyped json.
+- Internal improvements on racing conditions while finishing transactions.
+
+[#version-2025-09]
+=== Neo4j 2025.09
+
+- Surface database errors when beginning transactions.
+
+[#version-2025-08]
+=== Neo4j 2025.08
+
+- Improve integration with Bolt Server by disabling read timeouts on internal communication.
+
+
+[#version-2025-06]
+=== Neo4j 2025.06
+
+- Add support for transaction type (`txType`) on auto-commit query and transaction begin requests.
+
+[#version-2025-04]
+=== Neo4j 2025.04
+
+- Fix handling of empty statements on explicit transactions.
+
+
+[#version-2025-03]
+=== Neo4j 2025.03
+
+- Fix support on cluster environments.
+
+[#version-5.26]
+=== Neo4j 5.26
+
+- Introduce xref:transactions.adoc[Explicit Transactions].
+
+[#version-5-25]
+=== Neo4j 5.25
+
+- Query API is enabled by default on the database.
+- Fix database errors not being returned to the client.
+
+[#version-5-23]
+=== Neo4j 5.23
+
+- Query API is introduced as preview on the database. This can be enabled by adding `QUERY_API_ENDPOINTS` to  the `server.http_enabled_modules` configuration. More information on this configuration property https://neo4j.com/docs/operations-manual/current/configuration/configuration-settings/#config_server.http_enabled_modules[here].
+- Initial implementation for xref:plain-json.adoc[Untyped JSON result format] (`application/json`) and xref:typed-json.adoc[Typed JSON result format] (`application/vnd.neo4j.query`).
