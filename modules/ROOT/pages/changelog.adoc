@@ -69,18 +69,11 @@ Changes per Neo4j server release.
 - Fix `Vector` de-serialization. Remove the need for submitting the fields in order.
 - Fix `profileQueryPlan` optional fields on result summary. Non-present fields being omitted instead of defaulting to `0`.
 
-[#version-2026-06]
-=== Neo4j 2026.06
-
-- Introduce `internal.dbms.bolt.local_object_enabled` configuration. Adds the ability for Query API's driver to use POJO bolt message object communication instead of (de)serializing to the local channel connector. Default, disabled.
-
-
 [#version-2026-04]
 === Neo4j 2026.04
 
 - Introduce `txMetadata`
 - Fix `ZonedDateTime` handling by enforcing that all `ZonedDateTime` values include a valid `ZoneId`, and rejecting inputs that only contain an offset.
-
 
 [#version-2026-01]
 === Neo4j 2026.01
