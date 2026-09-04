@@ -49,7 +49,7 @@ Changes per Neo4j server release.
 === Neo4j 2026.09
 
 - Introduce `query_api` and `query_api_versions` fields to the discovery endpoint; deprecate field `query`.
-
+- Introduce `dbms.bolt.local_connector.object_transport_enabled` setting. This setting enables the use of local objects instead of Packstream when Query API communicates with Bolt Server. This improves the performance of Query API. Default: false.
 
 [#version-2026-08]
 === Neo4j 2026.08
