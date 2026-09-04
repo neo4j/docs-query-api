@@ -10,7 +10,7 @@ Changes per Query API version.
 [role=label--new-5.23]
 === Query API 2.0
 
-Introduce minor versions to Query API's versioning scheme.
+Initial release.
 
 == Typed JSON Media-type changelog
 
