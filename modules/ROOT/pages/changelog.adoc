@@ -6,6 +6,12 @@
 
 Changes per Query API version.
 
+[#query-api-version-2-1]
+[role=label--new-2026.10]
+=== Query API 2.1
+
+- Add support for `Realm` in authentication..
+
 [#query-api-version-2-0]
 [role=label--new-5.23]
 === Query API 2.0
@@ -44,6 +50,12 @@ Initial implementation of the xref:typed-json.adoc[Typed JSON result format].
 == Server changelog
 
 Changes per Neo4j server release.
+
+[#version-2026-10]
+=== Neo4j 2026.10
+
+- Introduce Query API 2.1
+    * Support for `Realm` in authentication.
 
 [#version-2026-09]
 === Neo4j 2026.09
