@@ -10,7 +10,7 @@ Changes per Query API version.
 [role=label--new-2026.10]
 === Query API 2.1
 
-- Add support for `Realm` in authentication..
+- Add support for `Neo4j-Realm` in authentication..
 
 [#query-api-version-2-0]
 [role=label--new-5.23]
@@ -55,7 +55,7 @@ Changes per Neo4j server release.
 === Neo4j 2026.10
 
 - Introduce Query API 2.1
-    * Support for `Realm` in authentication.
+    * Support for `Neo4j-Realm` in authentication.
 
 [#version-2026-09]
 === Neo4j 2026.09
