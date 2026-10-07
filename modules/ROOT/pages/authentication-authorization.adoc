@@ -90,6 +90,26 @@ The Neo4j server should also be set up to work with SSO.
 For more information, see link:https://neo4j.com/docs/operations-manual/current/tutorial/tutorial-sso-configuration/[Configuring Neo4j Single Sign-On (SSO)].
 
 
+[role=label--new-2026.10]
+== Authentication realm
+
+You can define an authentication context for both `Basic` and `Bearer` authentication. Specify the realm with the header `Neo4j-Realm`:
+
+[source,http]
+----
+Neo4j-Realm: <realm>
+----
+
+To authenticate against a specific realm (for example an LDAP realm named `ldap-users`), include the realm alongside your authorization credentials:
+
+.Using authentication realm
+[source,http]
+----
+Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
+Neo4j-Realm: ldap-users
+----
+
+
 == Errors
 
 === Missing authorization
