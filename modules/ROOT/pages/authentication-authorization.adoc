@@ -89,6 +89,8 @@ It is up to your application to generate bearer tokens via your SSO provider.
 The Neo4j server should also be set up to work with SSO.
 For more information, see link:https://neo4j.com/docs/operations-manual/current/tutorial/tutorial-sso-configuration/[Configuring Neo4j Single Sign-On (SSO)].
 
+
+[role=label--new-2026.10]
 == Authentication realm
 
 You can define an authentication context for both `Basic` and `Bearer` authentication. Specify the realm with the header `Neo4j-Realm`:
@@ -106,6 +108,7 @@ To authenticate against a specific realm (for example an LDAP realm named `ldap-
 Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
 Neo4j-Realm: ldap-users
 ----
+
 
 == Errors
 
