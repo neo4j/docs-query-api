@@ -91,16 +91,16 @@ For more information, see link:https://neo4j.com/docs/operations-manual/current/
 
 == Authentication realm
 
-An authentication context can be defined for both Basic and Bearer authentication. The realm is specified using the `Neo4j-Realm` HTTP header:
+You can define an authentication context for both `Basic` and `Bearer` authentication. Specify the realm with the header `Neo4j-Realm`:
 
 [source,http]
 ----
 Neo4j-Realm: <realm>
 ----
 
-.Using Authentication realm
-To authenticate against a specific realm (for example, an LDAP realm named `ldap-users`), your request headers should include the realm alongside your authorization credentials:
+To authenticate against a specific realm (for example an LDAP realm named `ldap-users`), include the realm alongside your authorization credentials:
 
+.Using authentication realm
 [source,http]
 ----
 Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
